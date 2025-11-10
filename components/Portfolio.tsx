@@ -1,0 +1,173 @@
+import { ExternalLink, TrendingUp } from "lucide-react";
+
+const caseStudies = [
+  {
+    id: 1,
+    title: "Consultorio Dental - Posicionamiento en Redes",
+    category: "Redes Sociales",
+    result: "+300% de consultas",
+    description:
+      "Transformamos su presencia en Instagram y Facebook generando cientos de consultas mensuales.",
+    image: "bg-gradient-to-br from-cyan/20 to-blue-200",
+    metrics: [
+      { label: "Seguidores", value: "+2,500" },
+      { label: "Consultas", value: "+300%" },
+      { label: "ROI", value: "400%" },
+    ],
+  },
+  {
+    id: 2,
+    title: "E-commerce de Moda - Desarrollo Web + Google Ads",
+    category: "Web + Ads",
+    result: "+500k USD en ventas",
+    description:
+      "Creamos un sitio web de alto rendimiento combinado con campañas de Google Ads estratégicas.",
+    image: "bg-gradient-to-br from-red/20 to-orange-200",
+    metrics: [
+      { label: "Ventas", value: "+500k USD" },
+      { label: "Conversión", value: "4.8%" },
+      { label: "AOV", value: "+45%" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Agencia Inmobiliaria - SEO + Redes",
+    category: "SEO + Redes",
+    result: "+50 propiedades vendidas",
+    description:
+      "Estrategia integral de SEO y redes sociales para captar clientes calificados.",
+    image: "bg-gradient-to-br from-yellow/20 to-amber-200",
+    metrics: [
+      { label: "Propiedades", value: "+50" },
+      { label: "Tráfico", value: "+1.2M" },
+      { label: "Leads", value: "+400" },
+    ],
+  },
+  {
+    id: 4,
+    title: "SaaS B2B - SEO & Content Marketing",
+    category: "SEO",
+    result: "+5k leads calificados",
+    description:
+      "Estrategia de contenido y SEO para posicionar en palabras clave de alto valor.",
+    image: "bg-gradient-to-br from-cyan/20 to-teal-200",
+    metrics: [
+      { label: "Leads", value: "+5k" },
+      { label: "Rankings", value: "+50" },
+      { label: "MRR", value: "+200k USD" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Restaurante Premium - Redes Sociales",
+    category: "Redes Sociales",
+    result: "+80% de ocupación",
+    description:
+      "Posicionamiento en redes sociales para generar reservas y aumentar ocupación.",
+    image: "bg-gradient-to-br from-red/20 to-pink-200",
+    metrics: [
+      { label: "Ocupación", value: "+80%" },
+      { label: "Seguidores", value: "+3k" },
+      { label: "Reservas", value: "+65%" },
+    ],
+  },
+  {
+    id: 6,
+    title: "Clínica Dental - Desarrollo Web",
+    category: "Web",
+    result: "+200 pacientes nuevos",
+    description:
+      "Sitio web profesional optimizado para generación de citas y consultas.",
+    image: "bg-gradient-to-br from-yellow/20 to-lime-200",
+    metrics: [
+      { label: "Pacientes", value: "+200" },
+      { label: "Citas", value: "+150/mes" },
+      { label: "Conversión", value: "5.2%" },
+    ],
+  },
+];
+
+export default function Portfolio() {
+  return (
+    <section id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div className="container mx-auto">
+        <div className="text-center mb-16 animate-fade-in-up">
+          <h2 className="text-4xl sm:text-5xl font-bold text-dark mb-4">
+            Portfolio de Casos de Éxito
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Proyectos reales con resultados comprobados que transformaron
+            negocios
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {caseStudies.map((study, index) => (
+            <div
+              key={study.id}
+              className="group animate-fade-in-up bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-cyan hover:shadow-lg transition-all duration-300"
+              style={{
+                animationDelay: `${index * 0.05}s`,
+              }}
+            >
+              {/* Image */}
+              <div
+                className={`h-40 ${study.image} relative overflow-hidden group-hover:scale-105 transition-transform duration-300`}
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <TrendingUp size={48} className="text-gray-400/30" />
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-3">
+                  <span className="inline-block px-3 py-1 bg-cyan/10 text-cyan text-xs font-semibold rounded-full">
+                    {study.category}
+                  </span>
+                  <ExternalLink size={16} className="text-gray-400" />
+                </div>
+
+                <h3 className="text-lg font-bold text-dark mb-2 group-hover:text-cyan transition-colors">
+                  {study.title}
+                </h3>
+
+                <p className="text-gray-600 text-sm mb-4">{study.description}</p>
+
+                {/* Result highlight */}
+                <div className="bg-cyan/10 rounded-lg p-4 mb-4">
+                  <p className="text-sm text-gray-600">Resultado</p>
+                  <p className="text-lg font-bold text-cyan">{study.result}</p>
+                </div>
+
+                {/* Metrics */}
+                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-200">
+                  {study.metrics.map((metric, i) => (
+                    <div key={i} className="text-center">
+                      <p className="text-sm font-bold text-dark">
+                        {metric.value}
+                      </p>
+                      <p className="text-xs text-gray-600">{metric.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <a
+            href="https://wa.me/541234567890"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-8 py-4 bg-cyan text-white rounded-lg font-semibold hover:bg-opacity-90 hover:shadow-lg transition-all"
+          >
+            Quiero un caso de éxito para mi negocio
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
