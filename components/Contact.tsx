@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import {
+  RiFacebookFill,
+  RiInstagramFill,
+  RiTiktokFill,
+} from "react-icons/ri";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -44,13 +49,23 @@ export default function Contact() {
   };
 
   return (
-    <section id="contacto" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="container mx-auto">
+    <section
+      id="contacto"
+      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden"
+    >
+      {/* Animated background gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#FFD74A] rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse" />
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#FF2C24] rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-[#27C7E0] rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse" />
+      </div>
+
+      <div className="container mx-auto relative z-10">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-4xl sm:text-5xl font-bold text-dark mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Hagamos crecer tu negocio
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Contáctanos para una consulta gratuita y descubre cómo podemos
             transformar tu presencia digital
           </p>
@@ -60,14 +75,14 @@ export default function Contact() {
           {/* Contact Info */}
           <div className="space-y-6 animate-fade-in-up">
             <div className="flex gap-4">
-              <div className="w-12 h-12 bg-cyan/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Phone size={24} className="text-cyan" />
+              <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-white/10">
+                <Phone size={24} className="text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-dark mb-1">WhatsApp</h3>
+                <h3 className="font-bold text-white mb-1">WhatsApp</h3>
                 <a
                   href="https://wa.me/541234567890"
-                  className="text-gray-600 hover:text-cyan transition"
+                  className="text-gray-300 hover:text-white transition"
                 >
                   +54 9 1234 567-890
                 </a>
@@ -75,14 +90,14 @@ export default function Contact() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-12 h-12 bg-cyan/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Mail size={24} className="text-cyan" />
+              <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-white/10">
+                <Mail size={24} className="text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-dark mb-1">Email</h3>
+                <h3 className="font-bold text-white mb-1">Email</h3>
                 <a
                   href="mailto:hola@cubomarketing.com"
-                  className="text-gray-600 hover:text-cyan transition"
+                  className="text-gray-300 hover:text-white transition"
                 >
                   hola@cubomarketing.com
                 </a>
@@ -90,42 +105,45 @@ export default function Contact() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-12 h-12 bg-cyan/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MapPin size={24} className="text-cyan" />
+              <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-white/10">
+                <MapPin size={24} className="text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-dark mb-1">Ubicación</h3>
-                <p className="text-gray-600">Buenos Aires, Argentina</p>
+                <h3 className="font-bold text-white mb-1">Ubicación</h3>
+                <p className="text-gray-300">Buenos Aires, Argentina</p>
               </div>
             </div>
 
             {/* Social Links */}
-            <div className="pt-6 border-t border-gray-200">
-              <h3 className="font-bold text-dark mb-4">Síguenos</h3>
+            <div className="pt-6 border-t border-white/10">
+              <h3 className="font-bold text-white mb-4">Síguenos</h3>
               <div className="flex gap-4">
                 <a
                   href="https://instagram.com/Cubo_agencia_de_marketing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-cyan/10 rounded-lg flex items-center justify-center text-cyan hover:bg-cyan hover:text-white transition-all"
+                  className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                  aria-label="Instagram"
                 >
-                  @
+                  <RiInstagramFill size={22} />
                 </a>
                 <a
                   href="https://facebook.com/Cubo-Marketing-Digital"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-cyan/10 rounded-lg flex items-center justify-center text-cyan hover:bg-cyan hover:text-white transition-all"
+                  className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                  aria-label="Facebook"
                 >
-                  f
+                  <RiFacebookFill size={22} />
                 </a>
                 <a
                   href="https://tiktok.com/@Cubo-Marketing-Digital"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-cyan/10 rounded-lg flex items-center justify-center text-cyan hover:bg-cyan hover:text-white transition-all"
+                  className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                  aria-label="TikTok"
                 >
-                  ♪
+                  <RiTiktokFill size={22} />
                 </a>
               </div>
             </div>
@@ -135,12 +153,12 @@ export default function Contact() {
           <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             <form
               onSubmit={handleSubmit}
-              className="bg-white rounded-xl p-8 border border-gray-200"
+              className="bg-white/[0.04] rounded-xl p-8 border border-white/10 backdrop-blur-sm"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-semibold text-dark mb-2">
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">
                     Nombre
                   </label>
                   <input
@@ -149,14 +167,14 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20 transition-all"
+                    className="w-full px-4 py-3 bg-[#060b12] border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 transition-all"
                     placeholder="Tu nombre"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-semibold text-dark mb-2">
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">
                     Email
                   </label>
                   <input
@@ -165,7 +183,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20 transition-all"
+                    className="w-full px-4 py-3 bg-[#060b12] border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 transition-all"
                     placeholder="tu@email.com"
                   />
                 </div>
@@ -174,7 +192,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-semibold text-dark mb-2">
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">
                     Teléfono
                   </label>
                   <input
@@ -182,21 +200,21 @@ export default function Contact() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20 transition-all"
+                    className="w-full px-4 py-3 bg-[#060b12] border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 transition-all"
                     placeholder="+54 9 1234 567-890"
                   />
                 </div>
 
                 {/* Service */}
                 <div>
-                  <label className="block text-sm font-semibold text-dark mb-2">
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">
                     Servicio de interés
                   </label>
                   <select
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20 transition-all"
+                    className="w-full px-4 py-3 bg-[#060b12] border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 transition-all"
                   >
                     <option value="redes-sociales">Redes Sociales</option>
                     <option value="seo-google-ads">SEO y Google Ads</option>
@@ -208,7 +226,7 @@ export default function Contact() {
 
               {/* Message */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold text-dark mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Mensaje
                 </label>
                 <textarea
@@ -217,7 +235,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20 transition-all resize-none"
+                  className="w-full px-4 py-3 bg-[#060b12] border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 transition-all resize-none"
                   placeholder="Cuéntanos sobre tu proyecto..."
                 ></textarea>
               </div>
@@ -226,7 +244,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={submitted}
-                className="w-full bg-cyan text-white font-semibold py-3 rounded-lg hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-75"
+                className="btn-tertiary disabled:opacity-50"
               >
                 {submitted ? (
                   <>
@@ -242,7 +260,7 @@ export default function Contact() {
               </button>
 
               {submitted && (
-                <div className="mt-4 p-4 bg-cyan/10 text-cyan rounded-lg text-center font-semibold animate-scale-in">
+                <div className="mt-4 p-4 bg-white/5 text-white rounded-lg text-center font-semibold border border-white/10 animate-scale-in">
                   ¡Mensaje enviado! Nos pondremos en contacto pronto.
                 </div>
               )}

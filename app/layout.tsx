@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Cubo Marketing Digital",
   description:
     "Agencia de marketing digital especializada en redes sociales, SEO y desarrollo web.",
-  metadataBase: new URL("https://www.cubo.com"), // Update with real domain when available
+  metadataBase: new URL("https://www.cubomarketingdigital.com"), // Update with real domain when available
 };
 
 export default function RootLayout({
@@ -23,11 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={inter.className}>
+    <html lang="es" className="dark">
+      <body className={`${inter.className} bg-background text-foreground`}>
         <Providers>
           <Header />
-          <main className="min-h-screen pt-16">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
           <WhatsAppButton />
         </Providers>

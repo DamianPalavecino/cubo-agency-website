@@ -9,6 +9,7 @@ const caseStudies = [
     description:
       "Transformamos su presencia en Instagram y Facebook generando cientos de consultas mensuales.",
     image: "bg-gradient-to-br from-cyan/20 to-blue-200",
+    accentColor: "border-cyan",
     metrics: [
       { label: "Seguidores", value: "+2,500" },
       { label: "Consultas", value: "+300%" },
@@ -23,6 +24,7 @@ const caseStudies = [
     description:
       "Creamos un sitio web de alto rendimiento combinado con campañas de Google Ads estratégicas.",
     image: "bg-gradient-to-br from-red/20 to-orange-200",
+    accentColor: "border-red",
     metrics: [
       { label: "Ventas", value: "+500k USD" },
       { label: "Conversión", value: "4.8%" },
@@ -37,6 +39,7 @@ const caseStudies = [
     description:
       "Estrategia integral de SEO y redes sociales para captar clientes calificados.",
     image: "bg-gradient-to-br from-yellow/20 to-amber-200",
+    accentColor: "border-yellow",
     metrics: [
       { label: "Propiedades", value: "+50" },
       { label: "Tráfico", value: "+1.2M" },
@@ -51,6 +54,7 @@ const caseStudies = [
     description:
       "Estrategia de contenido y SEO para posicionar en palabras clave de alto valor.",
     image: "bg-gradient-to-br from-cyan/20 to-teal-200",
+    accentColor: "border-cyan",
     metrics: [
       { label: "Leads", value: "+5k" },
       { label: "Rankings", value: "+50" },
@@ -65,6 +69,7 @@ const caseStudies = [
     description:
       "Posicionamiento en redes sociales para generar reservas y aumentar ocupación.",
     image: "bg-gradient-to-br from-red/20 to-pink-200",
+    accentColor: "border-red",
     metrics: [
       { label: "Ocupación", value: "+80%" },
       { label: "Seguidores", value: "+3k" },
@@ -79,6 +84,7 @@ const caseStudies = [
     description:
       "Sitio web profesional optimizado para generación de citas y consultas.",
     image: "bg-gradient-to-br from-yellow/20 to-lime-200",
+    accentColor: "border-yellow",
     metrics: [
       { label: "Pacientes", value: "+200" },
       { label: "Citas", value: "+150/mes" },
@@ -89,13 +95,16 @@ const caseStudies = [
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <section
+      id="portfolio"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#070b15] to-[#05080e]"
+    >
       <div className="container mx-auto">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-4xl sm:text-5xl font-bold text-dark mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Portfolio de Casos de Éxito
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Proyectos reales con resultados comprobados que transformaron
             negocios
           </p>
@@ -105,7 +114,7 @@ export default function Portfolio() {
           {caseStudies.map((study, index) => (
             <div
               key={study.id}
-              className="group animate-fade-in-up bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-cyan hover:shadow-lg transition-all duration-300"
+              className="group animate-fade-in-up bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all duration-300"
               style={{
                 animationDelay: `${index * 0.05}s`,
               }}
@@ -115,39 +124,43 @@ export default function Portfolio() {
                 className={`h-40 ${study.image} relative overflow-hidden group-hover:scale-105 transition-transform duration-300`}
               >
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <TrendingUp size={48} className="text-gray-400/30" />
+                  <TrendingUp size={48} className="text-white/30" />
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-3">
-                  <span className="inline-block px-3 py-1 bg-cyan/10 text-cyan text-xs font-semibold rounded-full">
+                  <span className="inline-block px-3 py-1 bg-white/10 text-white text-xs font-semibold rounded-full">
                     {study.category}
                   </span>
                   <ExternalLink size={16} className="text-gray-400" />
                 </div>
 
-                <h3 className="text-lg font-bold text-dark mb-2 group-hover:text-cyan transition-colors">
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan transition-colors">
                   {study.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm mb-4">{study.description}</p>
+                <p className="text-gray-300 text-sm mb-4">
+                  {study.description}
+                </p>
 
                 {/* Result highlight */}
-                <div className="bg-cyan/10 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-gray-600">Resultado</p>
-                  <p className="text-lg font-bold text-cyan">{study.result}</p>
+                <div className="bg-white/5 rounded-lg p-4 mb-4 border border-white/5">
+                  <p className="text-sm text-gray-400">Resultado</p>
+                  <p className="text-lg font-bold text-white">
+                    {study.result}
+                  </p>
                 </div>
 
                 {/* Metrics */}
-                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-200">
+                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                   {study.metrics.map((metric, i) => (
                     <div key={i} className="text-center">
-                      <p className="text-sm font-bold text-dark">
+                      <p className="text-sm font-bold text-white">
                         {metric.value}
                       </p>
-                      <p className="text-xs text-gray-600">{metric.label}</p>
+                      <p className="text-xs text-gray-400">{metric.label}</p>
                     </div>
                   ))}
                 </div>
@@ -162,9 +175,10 @@ export default function Portfolio() {
             href="https://wa.me/541234567890"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-4 bg-cyan text-white rounded-lg font-semibold hover:bg-opacity-90 hover:shadow-lg transition-all"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-semibold hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)] transition-all"
           >
             Quiero un caso de éxito para mi negocio
+            <ExternalLink size={18} />
           </a>
         </div>
       </div>

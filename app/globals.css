@@ -1,126 +1,109 @@
-/** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  /**
-   * Tailwind CSS theme
-   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
-   * A different format will require also updating the theme in tailwind.config.ts.
-  */
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+:root {
+  /* Pure black background with accent colors */
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #27c7e0;
+  --primary-foreground: #000000;
+  --secondary: #ff2c24;
+  --secondary-foreground: #ffffff;
+  --muted: #333333;
+  --muted-foreground: #999999;
+  --accent: #ffd74a;
+  --accent-foreground: #000000;
+  --destructive: #ff2c24;
+  --destructive-foreground: #ffffff;
+  --border: #1a1a1a;
+  --input: #0a0a0a;
+  --ring: #27c7e0;
+  --chart-1: #27c7e0;
+  --chart-2: #ff2c24;
+  --chart-3: #ffd74a;
+  --chart-4: #00d9ff;
+  --chart-5: #ff6b54;
+  --radius: 0.625rem;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #27c7e0;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1a1a1a;
+  --sidebar-ring: #27c7e0;
+}
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Cubo Brand Colors */
-    --cyan: 167 74% 69%;
-    --red: 0 100% 50%;
-    --yellow: 46 100% 62%;
-    --dark: 0 0% 4%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #27c7e0;
+  --primary-foreground: #000000;
+  --secondary: #ff2c24;
+  --secondary-foreground: #ffffff;
+  --muted: #333333;
+  --muted-foreground: #999999;
+  --accent: #ffd74a;
+  --accent-foreground: #000000;
+  --destructive: #ff2c24;
+  --destructive-foreground: #ffffff;
+  --border: #1a1a1a;
+  --input: #0a0a0a;
+  --ring: #27c7e0;
+  --chart-1: #27c7e0;
+  --chart-2: #ff2c24;
+  --chart-3: #ffd74a;
+  --chart-4: #00d9ff;
+  --chart-5: #ff6b54;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #27c7e0;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1a1a1a;
+  --sidebar-ring: #27c7e0;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
-
   body {
     @apply bg-background text-foreground;
   }
+}
 
-  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
-    overflow-wrap: anywhere;
-    word-break: break-word;
+@layer components {
+  /* Primary button - Cyan with black text */
+  .btn-primary {
+    @apply px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm lg:text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 w-full sm:w-fit !bg-[#27C7E0] !text-black;
   }
 
-  pre,
-  code {
-    overflow-x: auto;
-    white-space: pre;
+  .btn-primary:hover {
+    @apply !bg-[#1db5ce];
+  }
+
+  /* Secondary button - White border with white text */
+  .btn-secondary {
+    @apply px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm lg:text-base transition-all duration-300 border-2 border-white !text-white w-full sm:w-fit hover:!bg-white hover:!text-black;
+  }
+
+  /* Tertiary button - Red with white text */
+  .btn-tertiary {
+    @apply px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm lg:text-base transition-all duration-300 w-full !bg-[#FF2C24] !text-white flex items-center justify-center gap-2;
+  }
+
+  .btn-tertiary:hover {
+    @apply !bg-[#e61f1a];
   }
 }
