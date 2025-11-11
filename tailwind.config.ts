@@ -90,12 +90,45 @@ export default {
             height: "0",
           },
         },
-        "float": {
+        float: {
           "0%, 100%": {
             transform: "translateY(0px)",
           },
           "50%": {
             transform: "translateY(-10px)",
+          },
+        },
+        "float-slow": {
+          "0%, 100%": {
+            transform: "translate(0, 0) scale(1)",
+          },
+          "33%": {
+            transform: "translate(30px, -20px) scale(1.05)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.98)",
+          },
+        },
+        "float-slower": {
+          "0%, 100%": {
+            transform: "translate(0, 0) scale(1)",
+          },
+          "33%": {
+            transform: "translate(-25px, 25px) scale(1.08)",
+          },
+          "66%": {
+            transform: "translate(20px, -15px) scale(0.95)",
+          },
+        },
+        "float-slowest": {
+          "0%, 100%": {
+            transform: "translate(0, 0) scale(1)",
+          },
+          "33%": {
+            transform: "translate(20px, -15px) scale(1.03)",
+          },
+          "66%": {
+            transform: "translate(-15px, 10px) scale(0.97)",
           },
         },
         "fade-in-up": {
@@ -118,13 +151,25 @@ export default {
             transform: "scale(1)",
           },
         },
+        gradient: {
+          "0%, 100%": {
+            "background-position": "0% 50%",
+          },
+          "50%": {
+            "background-position": "100% 50%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 3s ease-in-out infinite",
+        float: "float 3s ease-in-out infinite",
+        "float-slow": "float-slow 20s ease-in-out infinite",
+        "float-slower": "float-slower 25s ease-in-out infinite",
+        "float-slowest": "float-slowest 18s ease-in-out infinite",
         "fade-in-up": "fade-in-up 0.6s ease-out",
         "scale-in": "scale-in 0.5s ease-out",
+        gradient: "gradient 3s ease infinite",
       },
     },
   },
