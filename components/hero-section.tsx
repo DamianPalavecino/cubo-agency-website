@@ -1,10 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Play } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+
+const GeometricShape = ({
+  className,
+  delay = 0,
+}: {
+  className: string;
+  delay?: number;
+}) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: [0.3, 0.6, 0.3] }}
+    transition={{
+      duration: 6,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className={className}
+  />
+);
 
 export function HeroSection() {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -12,92 +35,246 @@ export function HeroSection() {
     }
   };
 
-  return (
-    <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center pt-24 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8">
-      {/* Optimized background gradient orbs using CSS animations */}
-      <div className="absolute top-20 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-[#27C7E0] rounded-full mix-blend-screen filter blur-3xl opacity-10 sm:opacity-15 animate-float-slow" />
-      <div className="absolute bottom-0 left-1/4 w-56 sm:w-80 h-56 sm:h-80 bg-[#FF2C24] rounded-full mix-blend-screen filter blur-3xl opacity-10 sm:opacity-15 animate-float-slower" />
-      <div className="absolute top-1/2 left-0 w-48 sm:w-72 h-48 sm:h-72 bg-[#FFD74A] rounded-full mix-blend-screen filter blur-3xl opacity-10 sm:opacity-15 animate-float-slowest" />
+  const handleVideoClick = () => {
+    setIsVideoPlaying(true);
+  };
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12 md:py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-6 md:gap-8 lg:gap-16 items-center w-full">
-          {/* Left side - Hero text content - Below video on mobile */}
+  return (
+    <div
+      id="hero"
+      className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center pt-32 pb-12"
+    >
+      {/* Premium geometric background - Isometric design system */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Top-right cyan accent */}
+        <GeometricShape
+          className="absolute top-10 right-20 w-96 h-96 bg-[#27C7E0] rounded-full mix-blend-screen blur-3xl opacity-5"
+          delay={0}
+        />
+        {/* Bottom-left red accent */}
+        <GeometricShape
+          className="absolute -bottom-32 -left-32 w-[500px] h-[500px] bg-[#FF2C24] rounded-full mix-blend-multiply blur-3xl opacity-5"
+          delay={1}
+        />
+        {/* Center yellow accent */}
+        <GeometricShape
+          className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-[#FFD74A] rounded-full mix-blend-screen blur-3xl opacity-5"
+          delay={2}
+        />
+
+        {/* Isometric grid pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.02]">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="isometric-grid"
+                width="100"
+                height="100"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 0 0 L 50 28.8 L 100 0 M 50 28.8 L 50 86.4 M 0 57.6 L 50 86.4 L 100 57.6"
+                  stroke="white"
+                  strokeWidth="0.5"
+                  fill="none"
+                />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#isometric-grid)" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Left: Text Content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex flex-col gap-6 sm:gap-4 md:gap-6 lg:gap-8 order-2 lg:order-1 text-center lg:text-left"
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full"
           >
-            {/* Main heading with improved typography */}
-            <div className="space-y-2 sm:space-y-0">
-              <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-[1.3] sm:leading-tight tracking-tight">
-                Transformamos tu
-                <span className="block bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] bg-clip-text text-transparent mt-2 sm:mt-2 lg:mt-3 leading-[1.3] sm:leading-tight">
+            {/* Main Heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tight"
+            >
+              <span className="text-white">Transformamos tu</span>
+              <br />
+              <motion.span
+                className="inline-block relative"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] via-[#FFD74A] to-[#27C7E0]">
                   Presencia Digital
                 </span>
-              </h1>
-            </div>
+              </motion.span>
+            </motion.h1>
 
-            {/* Subtitle with better styling */}
-            <p className="text-gray-300 text-base sm:text-base lg:text-lg xl:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 px-2 sm:px-0 font-light">
-              Estrategias de marketing innovadoras que llevan tu marca al
-              siguiente nivel. Desde diseño digital hasta campañas de alto
-              impacto.
-            </p>
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-base md:text-lg lg:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
+            >
+              Campañas de marketing estratégicas, diseño web impresionante e
+              historias de marca poderosas que generan resultados medibles.
+              Elevemos tu negocio juntos.
+            </motion.p>
 
-            {/* CTA Buttons with improved styling */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4 justify-center lg:justify-start px-2 sm:px-0">
-              <Button
-                size="lg"
-                className="btn-primary group text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 rounded-lg w-full sm:w-auto relative overflow-hidden"
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start"
+            >
+              {/* Primary Button */}
+              <motion.button
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 50px rgba(255, 44, 36, 0.4)",
+                }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection("contacto")}
+                className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2"
               >
-                <span className="relative z-10 flex items-center">
-                  Comenzar Ahora
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-500 ease-out" />
-                </span>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="btn-secondary group text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 rounded-lg border-2 w-full sm:w-auto relative overflow-hidden"
-                onClick={() => scrollToSection("servicios")}
-              >
-                <span className="relative z-10">Saber Más</span>
-              </Button>
-            </div>
+                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                <span className="relative z-10">Comienza Hoy</span>
+                <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </motion.button>
+            </motion.div>
           </motion.div>
 
-          {/* Right side - Vimeo video with enhanced styling */}
+          {/* Right: Video Frame - Perfectly Aligned */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center order-1 lg:order-2 mb-8 sm:mb-0"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center items-center w-full"
           >
-            <div className="relative group">
-              {/* Glow effect - removed animate-pulse for performance */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#27C7E0] via-[#FF2C24] to-[#FFD74A] rounded-xl sm:rounded-2xl lg:rounded-3xl blur-xl opacity-20 sm:opacity-30 group-hover:opacity-40 transition-opacity" />
+            <div className="relative w-full max-w-sm">
+              {/* Floating animation container */}
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="w-full"
+              >
+                {/* Glowing border effect - layered */}
+                <motion.div
+                  className="absolute -inset-1 bg-gradient-to-r from-[#FF2C24] via-[#27C7E0] to-[#FFD74A] rounded-[2rem] blur-2xl opacity-0"
+                  animate={{
+                    opacity: [0, 0.4, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
 
-              <div className="relative bg-gradient-to-br from-[#27C7E0]/30 via-[#FF2C24]/20 to-[#FFD74A]/20 p-[2px] rounded-lg sm:rounded-xl lg:rounded-2xl backdrop-blur-md border border-white/20 w-full max-w-[280px] sm:max-w-xs lg:max-w-sm mx-auto">
-                <div className="bg-black/90 aspect-[9/16] rounded-lg sm:rounded-xl lg:rounded-2xl relative overflow-hidden shadow-2xl">
-                  <iframe
-                    src="https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&player_id=0&app_id=58479&loop=1"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    className="w-full h-full rounded-lg sm:rounded-xl lg:rounded-2xl"
-                    title="Bienvenidos a Cubo Marketing Digital"
-                    style={{ pointerEvents: "auto" }}
+                {/* Solid gradient border */}
+                <div className="relative bg-black rounded-[2rem] p-0.5 border border-white/5 overflow-hidden">
+                  {/* Inner glow */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-b from-[#FF2C24]/10 via-transparent to-[#27C7E0]/10 pointer-events-none"
+                    animate={{
+                      opacity: [0.5, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
-                  {/* Video overlay gradient for better integration */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Video container */}
+                  <div className="relative bg-black rounded-[1.875rem] overflow-hidden aspect-[9/16]">
+                    {/* Video iframe */}
+                    <iframe
+                      src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=${isVideoPlaying ? 1 : 0}&muted=0&player_id=0&app_id=58479`}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      className="w-full h-full"
+                      title="Cubo Marketing Digital"
+                    />
+                    
+                    {/* Custom thumbnail overlay */}
+                    {!isVideoPlaying && (
+                      <motion.div
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 cursor-pointer group"
+                        onClick={handleVideoClick}
+                      >
+                        {/* Thumbnail image */}
+                        <div className="relative w-full h-full">
+                          <Image
+                            src="/video-thumbnail.png"
+                            alt="Cubo Marketing Digital Video"
+                            fill
+                            className="object-cover"
+                            priority
+                          />
+                        </div>
+                        
+                        {/* Play button overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                          <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:bg-white transition-colors"
+                          >
+                            <Play className="w-8 h-8 text-black ml-1" fill="black" />
+                          </motion.div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity"
+      >
+        <span className="text-xs text-gray-400 font-medium">
+          Desplázate para explorar
+        </span>
+        <svg
+          className="w-5 h-5 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          />
+        </svg>
+      </motion.div>
     </div>
   );
 }
