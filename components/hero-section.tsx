@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 
 const GeometricShape = ({
   className,
@@ -27,6 +29,7 @@ const GeometricShape = ({
 
 export function HeroSection() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -37,6 +40,15 @@ export function HeroSection() {
 
   const handleVideoClick = () => {
     setIsVideoPlaying(true);
+  };
+
+  const handlePlayButtonClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setIsVideoPlaying(false);
   };
 
   return (
@@ -88,19 +100,101 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Right: Video Frame - Hidden on mobile, visible on desktop */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hidden lg:flex justify-center items-center w-full order-1 lg:order-2"
+          >
+            <div className="relative w-full max-w-xs">
+              {/* Video container */}
+              <div className="w-full">
+                {/* Multi-color glow effect */}
+                <motion.div
+                  className="absolute -inset-2 bg-gradient-to-r from-[#FF2C24] via-[#FFD74A] to-[#27C7E0] rounded-[2rem] blur-2xl"
+                  animate={{
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+
+                {/* Video container - proper 9:16 aspect ratio */}
+                <div className="relative bg-black rounded-[2rem] overflow-hidden aspect-[9/16] w-full">
+                  {/* Video iframe */}
+                  <iframe
+                    src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=${
+                      isVideoPlaying ? 1 : 0
+                    }&muted=0&player_id=0&app_id=58479`}
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    className="w-full h-full"
+                    title="Cubo Marketing Digital"
+                  />
+
+                  {/* Custom thumbnail overlay */}
+                  {!isVideoPlaying && (
+                    <motion.div
+                      initial={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 cursor-pointer group"
+                      onClick={handleVideoClick}
+                    >
+                      {/* Thumbnail image with enhanced visibility */}
+                      <div className="relative w-full h-full bg-[#000000] flex items-center justify-center">
+                        <div className="relative w-[85%] h-[85%]">
+                          <Image
+                            src="/video-thumbnail.png"
+                            alt="Cubo Marketing Digital Video"
+                            fill
+                            className="object-contain brightness-110 contrast-105 saturate-110"
+                            priority
+                          />
+                        </div>
+                        {/* Subtle gradient overlay for better visibility */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                      </div>
+
+                      {/* Play button overlay - lighter and more subtle */}
+                      <div className="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ scale: 1.15 }}
+                          whileTap={{ scale: 0.95 }}
+                          style={{ transformOrigin: "center" }}
+                          className="w-24 h-24 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white group-hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 border-2 border-white/20 -mt-16"
+                        >
+                          <Play
+                            className="w-10 h-10 text-black ml-1"
+                            fill="black"
+                          />
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Left: Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full"
+            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0"
           >
             {/* Main Heading */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tight"
+              className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight"
             >
               <span className="text-white">Transformamos tu</span>
               <br />
@@ -121,7 +215,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-base md:text-lg lg:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
+              className="text-base md:text-lg lg:text-lg text-white max-w-xl leading-relaxed font-light"
             >
               Campañas de marketing estratégicas, diseño web impresionante e
               historias de marca poderosas que generan resultados medibles.
@@ -149,132 +243,53 @@ export function HeroSection() {
                 <span className="relative z-10">Comienza Hoy</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </motion.button>
+
+              {/* Play Video Button - Visible on mobile */}
+              <motion.button
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 50px rgba(39, 199, 224, 0.4)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handlePlayButtonClick}
+                className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#27C7E0] to-[#27C7E0] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2 border border-[#27C7E0]/50 lg:hidden"
+              >
+                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                <Play className="relative z-10 w-5 h-5 fill-white" />
+                <span className="relative z-10">Ver Video</span>
+              </motion.button>
             </motion.div>
           </motion.div>
-
-          {/* Right: Video Frame - Perfectly Aligned */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center items-center w-full"
-          >
-            <div className="relative w-full max-w-sm">
-              {/* Floating animation container */}
-              <motion.div
-                animate={{
-                  y: [0, -12, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-full"
-              >
-                {/* Glowing border effect - layered */}
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-[#FF2C24] via-[#27C7E0] to-[#FFD74A] rounded-[2rem] blur-2xl opacity-0"
-                  animate={{
-                    opacity: [0, 0.4, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-
-                {/* Solid gradient border */}
-                <div className="relative bg-black rounded-[2rem] p-0.5 border border-white/5 overflow-hidden">
-                  {/* Inner glow */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-b from-[#FF2C24]/10 via-transparent to-[#27C7E0]/10 pointer-events-none"
-                    animate={{
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-
-                  {/* Video container */}
-                  <div className="relative bg-black rounded-[1.875rem] overflow-hidden aspect-[9/16]">
-                    {/* Video iframe */}
-                    <iframe
-                      src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=${isVideoPlaying ? 1 : 0}&muted=0&player_id=0&app_id=58479`}
-                      frameBorder="0"
-                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      className="w-full h-full"
-                      title="Cubo Marketing Digital"
-                    />
-                    
-                    {/* Custom thumbnail overlay */}
-                    {!isVideoPlaying && (
-                      <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute inset-0 cursor-pointer group"
-                        onClick={handleVideoClick}
-                      >
-                        {/* Thumbnail image */}
-                        <div className="relative w-full h-full">
-                          <Image
-                            src="/video-thumbnail.png"
-                            alt="Cubo Marketing Digital Video"
-                            fill
-                            className="object-cover"
-                            priority
-                          />
-                        </div>
-                        
-                        {/* Play button overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-                          <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:bg-white transition-colors"
-                          >
-                            <Play className="w-8 h-8 text-black ml-1" fill="black" />
-                          </motion.div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity"
-      >
-        <span className="text-xs text-gray-400 font-medium">
-          Desplázate para explorar
-        </span>
-        <svg
-          className="w-5 h-5 text-white"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+        {/* Video Modal for Mobile */}
+        <Dialog
+          open={isModalOpen}
+          onOpenChange={(open) => {
+            if (!open) {
+              handleModalClose();
+            } else {
+              setIsModalOpen(true);
+            }
+          }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
-      </motion.div>
+          <DialogContent className="max-w-[90vw] w-full p-0 bg-black border-none rounded-lg overflow-hidden [&>button]:text-white [&>button]:hover:text-gray-300 [&>button]:top-2 [&>button]:right-2">
+            <VisuallyHidden>
+              <DialogTitle>Cubo Marketing Digital Video</DialogTitle>
+            </VisuallyHidden>
+            <div className="relative w-full aspect-[9/16] bg-black">
+              <iframe
+                src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=0&player_id=0&app_id=58479`}
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                className="w-full h-full"
+                title="Cubo Marketing Digital"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }
