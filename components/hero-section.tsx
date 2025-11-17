@@ -55,7 +55,7 @@ export function HeroSection() {
   return (
     <div
       id="hero"
-      className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-12"
+      className="relative w-full min-h-[85vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-12"
     >
       {/* Premium geometric background - Isometric design system */}
       <div className="absolute inset-0 overflow-hidden">
@@ -90,7 +90,7 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 lg:gap-16 items-center">
           {/* Right: Video Frame - Hidden on mobile, visible on desktop */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
@@ -177,7 +177,7 @@ export function HeroSection() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0 lg:ml-4 xl:ml-8 -mt-8 md:mt-0"
+            className="flex flex-col gap-4 md:gap-6 lg:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0 lg:ml-4 xl:ml-8"
           >
             {/* Main Heading */}
             <motion.h1
@@ -217,7 +217,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-4 pt-1 md:pt-2 justify-center lg:justify-start"
             >
               {/* Primary Button */}
               <motion.a
@@ -238,7 +238,6 @@ export function HeroSection() {
               {/* Play Video Button - Visible on mobile */}
               <motion.button
                 whileHover={{
-                  scale: 1.05,
                   boxShadow: "0 20px 50px rgba(39, 199, 224, 0.4)",
                 }}
                 whileTap={{ scale: 0.95 }}
