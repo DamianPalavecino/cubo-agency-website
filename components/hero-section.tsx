@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
+import { RiWhatsappLine } from "react-icons/ri";
 import Image from "next/image";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -58,20 +59,10 @@ export function HeroSection() {
     >
       {/* Premium geometric background - Isometric design system */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Top-right cyan accent */}
-        <GeometricShape
-          className="absolute top-10 right-20 w-96 h-96 bg-[#27C7E0] rounded-full mix-blend-screen blur-3xl opacity-5"
-          delay={0}
-        />
         {/* Bottom-left red accent */}
         <GeometricShape
           className="absolute -bottom-32 -left-32 w-[500px] h-[500px] bg-[#FF2C24] rounded-full mix-blend-multiply blur-3xl opacity-5"
           delay={1}
-        />
-        {/* Center yellow accent */}
-        <GeometricShape
-          className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-[#FFD74A] rounded-full mix-blend-screen blur-3xl opacity-5"
-          delay={2}
         />
 
         {/* Isometric grid pattern overlay */}
@@ -105,7 +96,7 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:flex justify-center items-center w-full order-1 lg:order-2"
+            className="hidden lg:flex justify-end items-center w-full order-1 lg:order-2 pr-4 lg:pr-8 xl:pr-10"
           >
             <div className="relative w-full max-w-xs">
               {/* Video container */}
@@ -129,7 +120,7 @@ export function HeroSection() {
                   <iframe
                     src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=${
                       isVideoPlaying ? 1 : 0
-                    }&muted=0&player_id=0&app_id=58479`}
+                    }&muted=0&controls=0&dnt=1&player_id=0&app_id=58479`}
                     frameBorder="0"
                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
@@ -186,7 +177,7 @@ export function HeroSection() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0"
+            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0 lg:ml-4 xl:ml-8"
           >
             {/* Main Heading */}
             <motion.h1
@@ -229,19 +220,20 @@ export function HeroSection() {
               className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start"
             >
               {/* Primary Button */}
-              <motion.button
+              <motion.a
+                href="https://wa.me/541234567890"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{
-                  scale: 1.05,
                   boxShadow: "0 20px 50px rgba(255, 44, 36, 0.4)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection("contacto")}
                 className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                <RiWhatsappLine className="relative z-10 w-5 h-5" />
                 <span className="relative z-10">Comienza Hoy</span>
-                <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </motion.button>
+              </motion.a>
 
               {/* Play Video Button - Visible on mobile */}
               <motion.button
@@ -255,7 +247,7 @@ export function HeroSection() {
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
                 <Play className="relative z-10 w-5 h-5 fill-white" />
-                <span className="relative z-10">Ver Video</span>
+                <span className="relative z-10">Conoce más</span>
               </motion.button>
             </motion.div>
           </motion.div>
@@ -272,13 +264,13 @@ export function HeroSection() {
             }
           }}
         >
-          <DialogContent className="max-w-[90vw] w-full p-0 bg-black border-none rounded-lg overflow-hidden [&>button]:text-white [&>button]:hover:text-gray-300 [&>button]:top-2 [&>button]:right-2">
+          <DialogContent className="max-w-[90vw] md:max-w-md w-full p-0 bg-black border-none rounded-lg overflow-hidden [&>button]:text-white [&>button]:hover:text-white [&>button]:top-3 [&>button]:right-3 [&>button]:h-10 [&>button]:w-10 [&>button]:bg-black/70 [&>button]:hover:bg-black/90 [&>button]:rounded-full [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:border [&>button]:border-white/30 [&>button]:backdrop-blur-sm [&>button]:opacity-100 [&>button]:z-50 [&>button_svg]:h-6 [&>button_svg]:w-6">
             <VisuallyHidden>
               <DialogTitle>Cubo Marketing Digital Video</DialogTitle>
             </VisuallyHidden>
             <div className="relative w-full aspect-[9/16] bg-black">
               <iframe
-                src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=0&player_id=0&app_id=58479`}
+                src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=0&controls=0&dnt=1&player_id=0&app_id=58479`}
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"

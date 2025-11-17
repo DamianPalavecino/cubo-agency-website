@@ -188,52 +188,18 @@ export default function Footer() {
         {/* Bottom section */}
         <motion.div
           variants={itemVariants}
-          className="border-t border-white/10 pt-8 md:pt-12"
+          className="border-t border-white/10 py-8 md:py-12"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex justify-center items-center">
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
-              className="text-gray-400 text-sm text-center md:text-left"
+              className="text-gray-400 text-sm text-center"
             >
               &copy; 2025 Cubo Marketing Digital. Todos los derechos reservados.
-              |{" "}
-              <a
-                href="#"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Política de Privacidad
-              </a>{" "}
-              |{" "}
-              <a
-                href="#"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Términos de Servicio
-              </a>
             </motion.p>
-
-            {/* Bottom CTA */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <motion.a
-                href="https://wa.me/541234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-lg transition-all duration-300"
-              >
-                Hablemos
-                <RiArrowRightUpLine className="w-4 h-4" />
-              </motion.a>
-            </motion.div>
           </div>
         </motion.div>
       </motion.div>
