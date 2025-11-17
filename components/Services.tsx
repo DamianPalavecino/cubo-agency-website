@@ -49,7 +49,7 @@ export default function Services() {
   return (
     <section
       id="servicios"
-      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden"
+      className="relative py-20 px-2 sm:px-6 lg:px-8 bg-black overflow-hidden"
     >
       {/* Background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -69,7 +69,7 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -80,7 +80,7 @@ export default function Services() {
                   animationDelay: `${index * 0.1}s`,
                 }}
               >
-                <div className="bg-white/5 rounded-2xl border border-white/10 p-8 h-full hover:border-cyan/60 hover:bg-white/10 transition-all duration-300 relative overflow-hidden">
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 sm:p-8 h-full hover:border-cyan/60 hover:bg-white/10 transition-all duration-300 relative overflow-hidden">
                   {/* Gradient background on hover */}
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${service.color} to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10`}
