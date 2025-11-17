@@ -1,145 +1,188 @@
-import { Star } from "lucide-react";
+"use client";
 
-const testimonials = [
+import { useState, useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const testimonialVideos = [
   {
     id: 1,
-    name: "Carlos García",
-    role: "CEO, Consultorio Dental",
-    testimonial:
-      "Cubo transformó completamente nuestra presencia digital. De cero consultas en redes a 300+ mensuales en 3 meses. El equipo es profesional y muy atento.",
-    rating: 5,
-    image: "bg-gradient-to-br from-cyan to-blue-400",
-    accentColor: "#27C7E0",
+    vimeoId: "1137658520",
+    title:
+      "La satisfacción de ver al cliente feliz no tiene precio 🎉 muchas gracias por tus palabras Flo",
   },
   {
     id: 2,
-    name: "Sofía Martinez",
-    role: "Gerente, E-commerce de Moda",
-    testimonial:
-      "Los resultados con Google Ads fueron insuperables. Pasamos de 10k a 500k en ventas en 6 meses. Recomiendo a Cubo sin dudarlo.",
-    rating: 5,
-    image: "bg-gradient-to-br from-red to-pink-400",
-    accentColor: "#FF2C24",
+    vimeoId: "1137658742",
+    title: "Muchas gracias Fabricio de @altiv.sport por tu confianza, un placer trabajar con ustedes 👊",
   },
   {
     id: 3,
-    name: "Juan López",
-    role: "Propietario, Agencia Inmobiliaria",
-    testimonial:
-      "La estrategia SEO + redes de Cubo nos posicionó como líderes en nuestra zona. Hemos vendido más propiedades en el último año que en los tres años anteriores.",
-    rating: 5,
-    image: "bg-gradient-to-br from-yellow to-amber-400",
-    accentColor: "#FFD74A",
+    vimeoId: "1137658695",
+    title: "Muchas gracias Alejadro de @piscinas_alejandroo por la confianza de siempre 💙",
   },
   {
     id: 4,
-    name: "Ana Rodríguez",
-    role: "Directora de Marketing, SaaS B2B",
-    testimonial:
-      "El contenido y SEO que Cubo implementó nos posicionó en las primeras búsquedas. Generamos miles de leads calificados sin aumentar presupuesto.",
-    rating: 5,
-    image: "bg-gradient-to-br from-cyan to-teal-400",
-    accentColor: "#27C7E0",
-  },
-  {
-    id: 5,
-    name: "Marco Fernández",
-    role: "Dueño, Restaurante Premium",
-    testimonial:
-      "Nuestro restaurante estaba vacío. Con Cubo, en 4 meses llegamos a 80% de ocupación. Las redes sociales funcionan increíblemente.",
-    rating: 5,
-    image: "bg-gradient-to-br from-red to-rose-400",
-    accentColor: "#FF2C24",
-  },
-  {
-    id: 6,
-    name: "Laura Gómez",
-    role: "Directora, Clínica Dental",
-    testimonial:
-      "El sitio web de Cubo es una máquina de generar citas. Pasamos de 50 pacientes nuevos/mes a 200+ en 3 meses. Excelente ROI.",
-    rating: 5,
-    image: "bg-gradient-to-br from-yellow to-lime-400",
-    accentColor: "#FFD74A",
+    vimeoId: "1137658582",
+    title: "lv_0_20251027120103",
   },
 ];
 
 export default function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+    setAutoPlay(false);
+    // Resume autoplay after 5 seconds of user interaction
+    if (autoPlayTimeoutRef.current) {
+      clearTimeout(autoPlayTimeoutRef.current);
+    }
+    autoPlayTimeoutRef.current = setTimeout(() => {
+      setAutoPlay(true);
+    }, 5000);
+  };
+
+  const goToNext = () => {
+    goToSlide((currentIndex + 1) % testimonialVideos.length);
+  };
+
+  const goToPrev = () => {
+    goToSlide(
+      (currentIndex - 1 + testimonialVideos.length) % testimonialVideos.length
+    );
+  };
+
+  // Auto-advance carousel when video ends
+  useEffect(() => {
+    if (!autoPlay) return;
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://player.vimeo.com") return;
+
+      const data = event.data;
+      if (data.event === "finish") {
+        goToNext();
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [currentIndex, autoPlay]);
+
   return (
     <section
       id="testimonios"
       className="relative py-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden"
     >
-      {/* Animated background gradient orbs */}
+      {/* Background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#27C7E0] rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#FF2C24] rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse" />
-        <div className="absolute top-1/2 left-0 w-72 h-72 bg-[#FFD74A] rounded-full mix-blend-screen filter blur-3xl opacity-10 animate-pulse" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#27C7E0] rounded-full mix-blend-screen filter blur-3xl opacity-10" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#FF2C24] rounded-full mix-blend-screen filter blur-3xl opacity-10" />
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-[#FFD74A] rounded-full mix-blend-screen filter blur-3xl opacity-10" />
       </div>
 
       <div className="container mx-auto relative z-10">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
             Lo que dicen nuestros clientes
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Miles de empresas confían en Cubo para transformar su presencia
-            digital
+            Testimonios en video de clientes que transformaron su negocio con
+            Cubo
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.id}
-              className="animate-fade-in-up bg-white/5 rounded-xl p-8 border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all duration-300"
-              style={{
-                animationDelay: `${index * 0.05}s`,
-              }}
+        {/* Mobile Carousel - Hidden on desktop */}
+        <div className="flex flex-col items-center gap-8 md:hidden">
+          {/* Video Container */}
+          <div className="relative w-full max-w-sm aspect-[9/16] bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+            <iframe
+              ref={iframeRef}
+              key={currentIndex}
+              src={`https://player.vimeo.com/video/${testimonialVideos[currentIndex].vimeoId}?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0`}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title={testimonialVideos[currentIndex].title}
+              className="w-full h-full"
+            />
+          </div>
+
+          {/* Controls */}
+          <div className="flex items-center justify-between w-full max-w-2xl gap-4">
+            {/* Previous Button */}
+            <button
+              onClick={goToPrev}
+              className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 border border-white/20 hover:border-cyan/60 group"
+              aria-label="Video anterior"
             >
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={16}
-                    className="fill-yellow text-yellow"
-                  />
-                ))}
-              </div>
+              <ChevronLeft
+                size={24}
+                className="group-hover:text-cyan transition-colors"
+              />
+            </button>
 
-              {/* Testimonial text */}
-              <p className="text-gray-200 mb-6 leading-relaxed italic">
-                &ldquo;{testimonial.testimonial}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div
-                  className={`w-12 h-12 rounded-full ${testimonial.image}`}
-                ></div>
-                <div>
-                  <p className="font-bold text-white">{testimonial.name}</p>
-                  <p className="text-sm text-gray-400">{testimonial.role}</p>
-                </div>
-              </div>
+            {/* Dots Navigation */}
+            <div className="flex gap-2">
+              {testimonialVideos.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? "bg-gradient-to-r from-[#FF2C24] to-[#27C7E0] w-8"
+                      : "bg-white/30 hover:bg-white/50"
+                  }`}
+                  aria-label={`Ir al video ${index + 1}`}
+                />
+              ))}
             </div>
-          ))}
+
+            {/* Next Button */}
+            <button
+              onClick={goToNext}
+              className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 border border-white/20 hover:border-cyan/60 group"
+              aria-label="Video siguiente"
+            >
+              <ChevronRight
+                size={24}
+                className="group-hover:text-cyan transition-colors"
+              />
+            </button>
+          </div>
+
+          {/* Video counter */}
+          <div className="text-center text-gray-400">
+            <p className="text-sm">
+              Video {currentIndex + 1} de {testimonialVideos.length}
+            </p>
+          </div>
         </div>
 
-        {/* Trust Stats */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-white/10">
-          <div className="text-center">
-            <p className="text-4xl font-bold text-white mb-2">100+</p>
-            <p className="text-gray-400">Clientes satisfechos</p>
-          </div>
-          <div className="text-center">
-            <p className="text-4xl font-bold text-white mb-2">4.9★</p>
-            <p className="text-gray-400">Calificación promedio</p>
-          </div>
-          <div className="text-center">
-            <p className="text-4xl font-bold text-white mb-2">5M+</p>
-            <p className="text-gray-400">En resultados generados</p>
-          </div>
+        {/* Desktop Grid - Hidden on mobile */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {testimonialVideos.map((video) => (
+            <div
+              key={video.id}
+              className="relative aspect-[9/16] bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300"
+            >
+              <iframe
+                src={`https://player.vimeo.com/video/${video.vimeoId}?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0`}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title={video.title}
+                className="w-full h-full"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

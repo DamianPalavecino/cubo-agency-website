@@ -9,8 +9,8 @@ export default function HomePage() {
     <div className="w-full">
       <HeroSection />
       <SocialMediaCarousel />
-      {/* <Services /> */}
-      {/* <Testimonials /> */}
+      <Services />
+      <Testimonials />
       {/* <Contact /> */}
     </div>
   );
