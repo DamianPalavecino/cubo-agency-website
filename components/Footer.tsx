@@ -162,7 +162,7 @@ export default function Footer() {
             <motion.div key={i} variants={itemVariants}>
               <h4 className="text-white font-bold mb-6 flex items-center gap-2">
                 {section.title}
-                <span className="w-1 h-1 rounded-full bg-gradient-to-r from-[#FF2C24] to-[#FFD74A]" />
+                <span className="w-1 h-1 rounded-full bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0]" />
               </h4>
               <ul className="space-y-3">
                 {section.links.map((link, j) => (

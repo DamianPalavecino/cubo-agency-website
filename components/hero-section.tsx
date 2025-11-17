@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
-import { RiWhatsappLine } from "react-icons/ri";
+import { RiWhatsappFill } from "react-icons/ri";
 import Image from "next/image";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -55,7 +55,7 @@ export function HeroSection() {
   return (
     <div
       id="hero"
-      className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center pt-32 pb-12"
+      className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-12"
     >
       {/* Premium geometric background - Isometric design system */}
       <div className="absolute inset-0 overflow-hidden">
@@ -103,7 +103,7 @@ export function HeroSection() {
               <div className="w-full">
                 {/* Multi-color glow effect */}
                 <motion.div
-                  className="absolute -inset-2 bg-gradient-to-r from-[#FF2C24] via-[#FFD74A] to-[#27C7E0] rounded-[2rem] blur-2xl"
+                  className="absolute -inset-2 bg-gradient-to-r from-[#FF2C24] from-30% via-[#FFD74A] via-75% to-[#27C7E0] rounded-[2rem] blur-2xl"
                   animate={{
                     opacity: [0.3, 0.5, 0.3],
                   }}
@@ -177,7 +177,7 @@ export function HeroSection() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0 lg:ml-4 xl:ml-8"
+            className="flex flex-col gap-6 md:gap-7 text-center lg:text-left justify-center h-full order-2 lg:order-1 px-4 lg:px-0 lg:ml-4 xl:ml-8 -mt-8 md:mt-0"
           >
             {/* Main Heading */}
             <motion.h1
@@ -194,7 +194,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] via-[#FFD74A] to-[#27C7E0]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0]">
                   Presencia Digital
                 </span>
               </motion.span>
@@ -205,7 +205,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-base md:text-lg lg:text-lg text-white max-w-xl leading-relaxed font-light"
+              className="text-base md:text-lg lg:text-lg text-white max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
             >
               Campañas de marketing estratégicas, diseño web impresionante e
               historias de marca poderosas que generan resultados medibles.
@@ -231,7 +231,7 @@ export function HeroSection() {
                 className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-                <RiWhatsappLine className="relative z-10 w-5 h-5" />
+                <RiWhatsappFill className="relative z-10 w-5 h-5" />
                 <span className="relative z-10">Comienza Hoy</span>
               </motion.a>
 
@@ -264,7 +264,7 @@ export function HeroSection() {
             }
           }}
         >
-          <DialogContent className="max-w-[90vw] md:max-w-md w-full p-0 bg-black border-none rounded-lg overflow-hidden [&>button]:text-white [&>button]:hover:text-white [&>button]:top-3 [&>button]:right-3 [&>button]:h-10 [&>button]:w-10 [&>button]:bg-black/70 [&>button]:hover:bg-black/90 [&>button]:rounded-full [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:border [&>button]:border-white/30 [&>button]:backdrop-blur-sm [&>button]:opacity-100 [&>button]:z-50 [&>button_svg]:h-6 [&>button_svg]:w-6">
+          <DialogContent className="max-w-[90vw] md:max-w-md w-full p-0 bg-black border-none rounded-lg overflow-hidden z-[110] [&>button]:text-white [&>button]:hover:text-white [&>button]:top-3 [&>button]:right-3 [&>button]:h-10 [&>button]:w-10 [&>button]:bg-black/70 [&>button]:hover:bg-black/90 [&>button]:rounded-full [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:border [&>button]:border-white/30 [&>button]:backdrop-blur-sm [&>button]:opacity-100 [&>button]:z-[120] [&>button_svg]:h-6 [&>button_svg]:w-6">
             <VisuallyHidden>
               <DialogTitle>Cubo Marketing Digital Video</DialogTitle>
             </VisuallyHidden>

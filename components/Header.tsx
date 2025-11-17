@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { RiWhatsappLine } from "react-icons/ri";
+import { RiWhatsappFill } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
@@ -93,7 +93,7 @@ export default function Header() {
                 className="text-sm font-medium text-gray-300 hover:text-white px-4 py-2 rounded-lg hover:bg-white/5 transition-all duration-300 relative group"
               >
                 {item.label}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-[#27C7E0] to-[#FFD74A] group-hover:w-6 transition-all duration-300" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] group-hover:w-6 transition-all duration-300" />
               </motion.button>
             ))}
           </div>
@@ -111,7 +111,7 @@ export default function Header() {
             className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-[0_8px_24px_rgba(255,44,36,0.4)] transition-all duration-300 group relative overflow-hidden"
           >
             <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-            <RiWhatsappLine className="relative z-10 w-4 h-4" />
+            <RiWhatsappFill className="relative z-10 w-4 h-4" />
             <span className="relative z-10 whitespace-nowrap">Chatea con nosotros</span>
           </motion.a>
 
@@ -187,7 +187,7 @@ export default function Header() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 px-4 py-3.5 md:py-4 mt-4 rounded-lg font-semibold text-base md:text-lg text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-lg transition-all duration-300"
                     >
-                      <RiWhatsappLine className="w-5 h-5 md:w-6 md:h-6" />
+                      <RiWhatsappFill className="w-5 h-5 md:w-6 md:h-6" />
                       Chatea con nosotros
                     </motion.a>
                       </div>

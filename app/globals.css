@@ -333,15 +333,15 @@
 
   /* Premium text utilities */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-[#FF2C24] via-[#FFD74A] to-[#27C7E0] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] bg-clip-text text-transparent;
   }
 
   .text-gradient-warm {
-    @apply bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#FF2C24] from-50% via-[#FFD74A] via-80% to-[#27C7E0] bg-clip-text text-transparent;
   }
 
   .text-gradient-cool {
-    @apply bg-gradient-to-r from-[#27C7E0] to-[#FFD74A] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#27C7E0] via-[#FFD74A] via-60% to-[#FF2C24] bg-clip-text text-transparent;
   }
 
   /* Premium shadow utilities */
