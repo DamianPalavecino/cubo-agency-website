@@ -23,11 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
-      <body className={`${inter.className} bg-background text-foreground`}>
+    <html lang="es" className="dark bg-black">
+      <body className={`${inter.className} bg-background text-foreground bg-black`}>
         <Providers>
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-[90vh]">{children}</main>
           <Footer />
           <WhatsAppButton />
         </Providers>

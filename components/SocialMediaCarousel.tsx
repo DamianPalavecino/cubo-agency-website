@@ -55,7 +55,7 @@ export function SocialMediaCarousel() {
   }, 0);
 
   return (
-    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-4 md:py-6">
+    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-8">
       {/* Línea horizontal decorativa superior */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       {/* Línea horizontal decorativa inferior */}
@@ -93,12 +93,10 @@ export function SocialMediaCarousel() {
                 }}
               >
                 <div
-                  className={`relative w-full h-16 md:h-20 transition-all duration-300 ${
+                  className={`relative w-full h-16 md:h-20 opacity-60 hover:opacity-100 transition-all duration-300 contrast-125 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] ${
                     icon.name === "Google Ads"
-                      ? "opacity-70 hover:opacity-100 grayscale brightness-0 invert hover:grayscale-0 hover:brightness-100 hover:invert-0"
-                      : icon.name === "Meta" || icon.name === "Facebook"
-                      ? "opacity-95 hover:opacity-100 grayscale brightness-110 hover:grayscale-0"
-                      : "opacity-70 hover:opacity-100 grayscale hover:grayscale-0"
+                      ? "grayscale brightness-0 invert hover:grayscale-0 hover:brightness-100 hover:invert-0"
+                      : "grayscale hover:grayscale-0 brightness-150"
                   }`}
                 >
                   <Image
