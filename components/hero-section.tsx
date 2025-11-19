@@ -114,7 +114,6 @@ export function HeroSection() {
                   <VideoPlayer
                     src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                     title="Cubo Marketing Digital"
-                    thumbnail="/video-thumbnail.png"
                     containerClassName="rounded-[2rem]"
                     showControls={false}
                     muted={false}
@@ -228,7 +227,6 @@ export function HeroSection() {
                 showControls={true}
                 muted={false}
                 loop={false}
-                autoPlay={isModalOpen}
               />
             </div>
           </DialogContent>

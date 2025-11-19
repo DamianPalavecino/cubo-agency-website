@@ -3,7 +3,6 @@
 import { useState, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { VideoPlayer } from "@/components/VideoPlayer";
-import { useVideoPlayer } from "@/hooks/use-video-player";
 
 const R2_BASE_URL = "https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev";
 
@@ -37,7 +36,6 @@ export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
   const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { hasUserInteracted } = useVideoPlayer();
 
   const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
@@ -101,7 +99,6 @@ export default function Testimonials() {
               title={testimonialVideos[currentIndex].title}
               containerClassName="rounded-xl"
               showControls={true}
-              autoPlay={hasUserInteracted}
               muted={false}
               loop={false}
               onEnded={handleVideoEnd}

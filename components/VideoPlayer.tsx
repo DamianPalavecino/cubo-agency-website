@@ -13,7 +13,6 @@ interface VideoPlayerProps {
   className?: string;
   containerClassName?: string;
   showControls?: boolean;
-  autoPlay?: boolean;
   muted?: boolean;
   loop?: boolean;
   onPlay?: () => void;
@@ -29,7 +28,6 @@ export function VideoPlayer({
   className = "",
   containerClassName = "",
   showControls = false,
-  autoPlay = false,
   muted = false,
   loop = false,
   onPlay,
@@ -39,14 +37,7 @@ export function VideoPlayer({
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const { hasUserInteracted, playVideo } = useVideoPlayer();
-
-  // Auto-play when conditions are met
-  useEffect(() => {
-    if (autoPlay && hasUserInteracted && videoRef.current && !isPlaying) {
-      playVideo(videoRef);
-    }
-  }, [autoPlay, hasUserInteracted, isPlaying, playVideo]);
+  const { playVideo } = useVideoPlayer();
 
   // Handle video events
   useEffect(() => {
@@ -93,7 +84,8 @@ export function VideoPlayer({
         className={`w-full h-full object-cover ${className}`}
         playsInline
         muted={muted}
-        controls={showControls}
+        // Only show native controls when video is playing (to avoid duplicate play buttons)
+        controls={showControls && isPlaying}
         loop={loop}
         preload="metadata"
         title={title}
@@ -105,7 +97,7 @@ export function VideoPlayer({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="absolute inset-0 cursor-pointer group bg-black/20"
+          className="absolute inset-0 cursor-pointer group bg-black/20 z-10"
           onClick={handlePlayClick}
         >
           {/* Thumbnail image if provided */}
