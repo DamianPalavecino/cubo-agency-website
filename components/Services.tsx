@@ -49,7 +49,7 @@ export default function Services() {
   return (
     <section
       id="servicios"
-      className="relative py-20 px-2 sm:px-6 lg:px-8 bg-black overflow-hidden"
+      className="relative pt-12 md:pt-16 pb-20 px-2 sm:px-6 lg:px-8 bg-black overflow-hidden"
     >
       {/* Background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

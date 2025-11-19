@@ -50,7 +50,7 @@ export function HeroSection() {
   return (
     <div
       id="hero"
-      className="relative w-full min-h-[85vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-12"
+      className="relative w-full min-h-[85vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-12 md:pb-16"
     >
       {/* Premium geometric background - Isometric design system */}
       <div className="absolute inset-0 overflow-hidden">
@@ -224,9 +224,10 @@ export function HeroSection() {
                 key={isModalOpen ? "modal-open" : "modal-closed"}
                 src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                 title="Cubo Marketing Digital"
-                showControls={true}
+                showControls={false}
                 muted={false}
                 loop={false}
+                autoplay={isModalOpen}
               />
             </div>
           </DialogContent>

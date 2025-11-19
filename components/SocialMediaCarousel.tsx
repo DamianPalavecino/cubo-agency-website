@@ -55,7 +55,7 @@ export function SocialMediaCarousel() {
   }, 0);
 
   return (
-    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-8">
+    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-4 md:py-6">
       {/* Línea horizontal decorativa superior */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       {/* Línea horizontal decorativa inferior */}

@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 const R2_BASE_URL = "https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev";
 
@@ -33,38 +38,30 @@ const testimonialVideos = [
 ];
 
 export default function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
-  const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
-  const goToSlide = useCallback((index: number) => {
-    setCurrentIndex(index);
-    setAutoPlay(false);
-    // Resume autoplay after 5 seconds of user interaction
-    if (autoPlayTimeoutRef.current) {
-      clearTimeout(autoPlayTimeoutRef.current);
+  useEffect(() => {
+    if (!api) {
+      return;
     }
-    autoPlayTimeoutRef.current = setTimeout(() => {
-      setAutoPlay(true);
-    }, 5000);
-  }, []);
 
-  const goToNext = useCallback(() => {
-    goToSlide((currentIndex + 1) % testimonialVideos.length);
-  }, [currentIndex, goToSlide]);
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
-  const goToPrev = useCallback(() => {
-    goToSlide(
-      (currentIndex - 1 + testimonialVideos.length) % testimonialVideos.length
-    );
-  }, [currentIndex, goToSlide]);
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
-  // Auto-advance carousel when video ends
-  const handleVideoEnd = useCallback(() => {
-    if (autoPlay) {
-      goToNext();
+  const handleVideoEnd = () => {
+    if (api) {
+      const currentIndex = api.selectedScrollSnap();
+      const nextIndex = (currentIndex + 1) % testimonialVideos.length;
+      api.scrollTo(nextIndex);
     }
-  }, [autoPlay, goToNext]);
+  };
 
   return (
     <section
@@ -90,69 +87,49 @@ export default function Testimonials() {
         </div>
 
         {/* Mobile Carousel - Hidden on desktop */}
-        <div className="flex flex-col items-center gap-8 md:hidden">
-          {/* Video Container */}
-          <div className="relative w-full max-w-sm bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-            <VideoPlayer
-              key={currentIndex}
-              src={testimonialVideos[currentIndex].videoUrl}
-              title={testimonialVideos[currentIndex].title}
-              containerClassName="rounded-xl"
-              showControls={true}
-              muted={false}
-              loop={false}
-              onEnded={handleVideoEnd}
-            />
-          </div>
-
-          {/* Controls */}
-          <div className="flex items-center justify-between w-full max-w-2xl gap-4">
-            {/* Previous Button */}
-            <button
-              onClick={goToPrev}
-              className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 border border-white/20 hover:border-cyan/60 group"
-              aria-label="Video anterior"
-            >
-              <ChevronLeft
-                size={24}
-                className="group-hover:text-cyan transition-colors"
-              />
-            </button>
-
-            {/* Dots Navigation */}
-            <div className="flex gap-2">
-              {testimonialVideos.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? "bg-gradient-to-r from-[#FF2C24] to-[#27C7E0] w-8"
-                      : "bg-white/30 hover:bg-white/50"
-                  }`}
-                  aria-label={`Ir al video ${index + 1}`}
-                />
+        <div className="flex flex-col items-center gap-6 md:hidden w-full">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {testimonialVideos.map((video) => (
+                <CarouselItem key={video.id} className="pl-4 basis-[85%] sm:basis-[70%]">
+                  <div className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl h-full">
+                    <VideoPlayer
+                      src={video.videoUrl}
+                      title={video.title}
+                      containerClassName="rounded-xl"
+                      showControls={false}
+                      muted={false}
+                      loop={false}
+                      darkOverlay={true}
+                      onEnded={handleVideoEnd}
+                    />
+                  </div>
+                </CarouselItem>
               ))}
-            </div>
+            </CarouselContent>
+          </Carousel>
 
-            {/* Next Button */}
-            <button
-              onClick={goToNext}
-              className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 border border-white/20 hover:border-cyan/60 group"
-              aria-label="Video siguiente"
-            >
-              <ChevronRight
-                size={24}
-                className="group-hover:text-cyan transition-colors"
+          {/* Custom Dots Navigation */}
+          <div className="flex justify-center gap-2 pt-2">
+            {testimonialVideos.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index + 1 === current
+                    ? "bg-gradient-to-r from-[#FF2C24] to-[#27C7E0] w-6"
+                    : "bg-white/20 w-2 hover:bg-white/40"
+                }`}
+                aria-label={`Ir al video ${index + 1}`}
               />
-            </button>
-          </div>
-
-          {/* Video counter */}
-          <div className="text-center text-gray-400">
-            <p className="text-sm">
-              Video {currentIndex + 1} de {testimonialVideos.length}
-            </p>
+            ))}
           </div>
         </div>
 
@@ -167,9 +144,10 @@ export default function Testimonials() {
                 src={video.videoUrl}
                 title={video.title}
                 containerClassName="rounded-xl"
-                showControls={true}
+                showControls={false}
                 muted={false}
                 loop={false}
+                darkOverlay={true}
               />
             </div>
           ))}

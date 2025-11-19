@@ -15,6 +15,8 @@ interface VideoPlayerProps {
   showControls?: boolean;
   muted?: boolean;
   loop?: boolean;
+  autoplay?: boolean;
+  darkOverlay?: boolean;
   onPlay?: () => void;
   onPause?: () => void;
   onEnded?: () => void;
@@ -30,6 +32,8 @@ export function VideoPlayer({
   showControls = false,
   muted = false,
   loop = false,
+  autoplay = false,
+  darkOverlay = false,
   onPlay,
   onPause,
   onEnded,
@@ -37,7 +41,14 @@ export function VideoPlayer({
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const { playVideo } = useVideoPlayer();
+  const { playVideo, pauseVideo } = useVideoPlayer();
+
+  // Handle autoplay
+  useEffect(() => {
+    if (autoplay && videoRef.current) {
+      playVideo(videoRef);
+    }
+  }, [autoplay, playVideo]);
 
   // Handle video events
   useEffect(() => {
@@ -76,8 +87,32 @@ export function VideoPlayer({
     }
   };
 
+  const handlePauseClick = () => {
+    if (videoRef.current) {
+      pauseVideo(videoRef);
+    }
+  };
+
+  const handleVideoClick = (e: React.MouseEvent) => {
+    // Don't toggle if clicking on the button itself
+    if ((e.target as HTMLElement).closest('.video-control-button')) {
+      return;
+    }
+    
+    if (isPlaying) {
+      // Pause if playing
+      handlePauseClick();
+    } else {
+      // Play if paused
+      handlePlayClick();
+    }
+  };
+
   return (
-    <div className={`relative ${containerClassName} ${aspectRatio} overflow-hidden`}>
+    <div 
+      className={`relative ${containerClassName} ${aspectRatio} overflow-hidden cursor-pointer`}
+      onClick={handleVideoClick}
+    >
       <video
         ref={videoRef}
         src={src}
@@ -97,8 +132,13 @@ export function VideoPlayer({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="absolute inset-0 cursor-pointer group bg-black/20 z-10"
-          onClick={handlePlayClick}
+          className={`absolute inset-0 cursor-pointer group z-10 ${
+            darkOverlay ? "bg-black/60" : "bg-black/20"
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePlayClick();
+          }}
         >
           {/* Thumbnail image if provided */}
           {thumbnail && (
@@ -118,13 +158,14 @@ export function VideoPlayer({
             <motion.div
               whileTap={{ scale: 0.95 }}
               style={{ transformOrigin: "center" }}
-              className="w-20 h-20 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white group-hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 border-2 border-white/20"
+              className="video-control-button w-20 h-20 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white/50 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300 border-2 border-white/30"
             >
-              <Play className="w-8 h-8 text-black ml-1" fill="black" />
+              <Play className="w-8 h-8 text-white ml-1" fill="white" />
             </motion.div>
           </div>
         </motion.div>
       )}
+
     </div>
   );
 }
