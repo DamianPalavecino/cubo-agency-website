@@ -72,19 +72,19 @@ export default function About() {
               Sobre Cubo Marketing Digital
             </h2>
             <p className="text-lg text-gray-300 mb-4 leading-relaxed">
-              Somos una agencia de marketing digital especializada en transformar
-              negocios a través de estrategias digitales comprobadas y
-              resultados medibles.
+              Somos una agencia de marketing digital especializada en
+              transformar negocios a través de estrategias digitales comprobadas
+              y resultados medibles.
             </p>
             <p className="text-lg text-gray-300 mb-6 leading-relaxed">
               Con más de 5 años de experiencia, hemos ayudado a cientos de
-              empresas a alcanzar sus objetivos en redes sociales, posicionamiento
-              SEO y desarrollo web.
+              empresas a alcanzar sus objetivos en redes sociales,
+              posicionamiento SEO y desarrollo web.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
               Nuestro equipo está formado por profesionales apasionados por el
-              marketing digital, con la experiencia y conocimiento necesario para
-              hacer crecer tu negocio en línea.
+              marketing digital, con la experiencia y conocimiento necesario
+              para hacer crecer tu negocio en línea.
             </p>
           </motion.div>
 
@@ -99,13 +99,17 @@ export default function About() {
               <div className="bg-gradient-to-br from-white/10 to-transparent rounded-xl p-8 h-48 flex items-center justify-center border border-white/10">
                 <div className="text-center">
                   <p className="text-3xl font-bold text-white mb-2">+100</p>
-                  <p className="text-gray-300 font-semibold">Clientes activos</p>
+                  <p className="text-gray-300 font-semibold">
+                    Clientes activos
+                  </p>
                 </div>
               </div>
               <div className="bg-gradient-to-br from-red/30 to-transparent rounded-xl p-8 h-48 flex items-center justify-center border border-white/10">
                 <div className="text-center">
                   <p className="text-3xl font-bold text-white mb-2">+5</p>
-                  <p className="text-gray-300 font-semibold">Años experiencia</p>
+                  <p className="text-gray-300 font-semibold">
+                    Años experiencia
+                  </p>
                 </div>
               </div>
               <div className="bg-gradient-to-br from-yellow/20 to-transparent rounded-xl p-8 h-48 flex items-center justify-center border border-white/10">
@@ -121,7 +125,7 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Values */}
