@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import {
@@ -66,7 +67,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonios"
-      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden"
+      className="relative pt-12 md:pt-12 pb-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden"
     >
       {/* Background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -75,8 +76,14 @@ export default function Testimonials() {
         <div className="absolute top-1/2 left-0 w-72 h-72 bg-[#FFD74A] rounded-full mix-blend-screen filter blur-3xl opacity-10" />
       </div>
 
-      <div className="container mx-auto relative z-10">
-        <div className="text-center mb-16 animate-fade-in-up">
+      <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
             Lo que dicen nuestros clientes
           </h2>
@@ -84,7 +91,7 @@ export default function Testimonials() {
             Testimonios en video de clientes que transformaron su negocio con
             Cubo
           </p>
-        </div>
+        </motion.div>
 
         {/* Mobile Carousel - Hidden on desktop */}
         <div className="flex flex-col items-center gap-6 md:hidden w-full">
@@ -98,7 +105,10 @@ export default function Testimonials() {
           >
             <CarouselContent className="-ml-4">
               {testimonialVideos.map((video) => (
-                <CarouselItem key={video.id} className="pl-4 basis-[85%] sm:basis-[70%]">
+                <CarouselItem
+                  key={video.id}
+                  className="pl-4 basis-[85%] sm:basis-[70%]"
+                >
                   <div className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl h-full">
                     <VideoPlayer
                       src={video.videoUrl}
@@ -135,9 +145,13 @@ export default function Testimonials() {
 
         {/* Desktop Grid - Hidden on mobile */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonialVideos.map((video) => (
-            <div
+          {testimonialVideos.map((video, index) => (
+            <motion.div
               key={video.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300"
             >
               <VideoPlayer
@@ -149,7 +163,7 @@ export default function Testimonials() {
                 loop={false}
                 darkOverlay={true}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

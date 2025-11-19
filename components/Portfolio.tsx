@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { ExternalLink, TrendingUp } from "lucide-react";
 
 const caseStudies = [
@@ -100,7 +103,13 @@ export default function Portfolio() {
       className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#070b15] to-[#05080e]"
     >
       <div className="container mx-auto">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Portfolio de Casos de Éxito
           </h2>
@@ -108,16 +117,17 @@ export default function Portfolio() {
             Proyectos reales con resultados comprobados que transformaron
             negocios
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((study, index) => (
-            <div
+            <motion.div
               key={study.id}
-              className="group animate-fade-in-up bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all duration-300"
-              style={{
-                animationDelay: `${index * 0.05}s`,
-              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all duration-300"
             >
               {/* Image */}
               <div
@@ -165,12 +175,18 @@ export default function Portfolio() {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-12 text-center"
+        >
           <a
             href="https://wa.me/5493415958964"
             target="_blank"
@@ -180,7 +196,7 @@ export default function Portfolio() {
             Quiero un caso de éxito para mi negocio
             <ExternalLink size={18} />
           </a>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

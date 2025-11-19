@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { CheckCircle, Users, Lightbulb, Target } from "lucide-react";
 
 const values = [
@@ -59,7 +62,12 @@ export default function About() {
       <div className="container mx-auto">
         {/* Main content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 items-center">
-          <div className="animate-fade-in-up">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
               Sobre Cubo Marketing Digital
             </h2>
@@ -78,9 +86,15 @@ export default function About() {
               marketing digital, con la experiencia y conocimiento necesario para
               hacer crecer tu negocio en línea.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="relative animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative"
+          >
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gradient-to-br from-white/10 to-transparent rounded-xl p-8 h-48 flex items-center justify-center border border-white/10">
                 <div className="text-center">
@@ -111,7 +125,13 @@ export default function About() {
         </div>
 
         {/* Values */}
-        <div className="mb-20 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-20"
+        >
           <h3 className="text-3xl font-bold text-white mb-12 text-center">
             Nuestros Valores
           </h3>
@@ -119,8 +139,12 @@ export default function About() {
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
-                <div
+                <motion.div
                   key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                   className="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all"
                 >
                   <div className="mb-4">
@@ -128,21 +152,30 @@ export default function About() {
                   </div>
                   <h4 className="font-bold text-white mb-2">{value.title}</h4>
                   <p className="text-gray-300 text-sm">{value.description}</p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* Team */}
-        <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           <h3 className="text-3xl font-bold text-white mb-12 text-center">
             Nuestro Equipo
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((member, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                 className="bg-white/5 rounded-xl p-6 border border-white/10 text-center hover:border-cyan/60 transition-all"
               >
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-cyan to-blue-400 rounded-full border border-white/10"></div>
@@ -151,10 +184,10 @@ export default function About() {
                   {member.role}
                 </p>
                 <p className="text-xs text-gray-400">{member.specialty}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

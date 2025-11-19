@@ -21,6 +21,7 @@ interface VideoPlayerProps {
   onPause?: () => void;
   onEnded?: () => void;
   aspectRatio?: string;
+  overlayContent?: React.ReactNode;
 }
 
 export function VideoPlayer({
@@ -38,6 +39,7 @@ export function VideoPlayer({
   onPause,
   onEnded,
   aspectRatio = "aspect-[9/16]",
+  overlayContent,
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -140,29 +142,35 @@ export function VideoPlayer({
             handlePlayClick();
           }}
         >
-          {/* Thumbnail image if provided */}
-          {thumbnail && (
-            <div className="absolute inset-0">
-              <Image
-                src={thumbnail}
-                alt={title || "Video thumbnail"}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-            </div>
-          )}
+          {overlayContent ? (
+            overlayContent
+          ) : (
+            <>
+              {/* Thumbnail image if provided */}
+              {thumbnail && (
+                <div className="absolute inset-0">
+                  <Image
+                    src={thumbnail}
+                    alt={title || "Video thumbnail"}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                </div>
+              )}
 
-          {/* Play button - centered */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              whileTap={{ scale: 0.95 }}
-              style={{ transformOrigin: "center" }}
-              className="video-control-button w-20 h-20 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white/50 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300 border-2 border-white/30"
-            >
-              <Play className="w-8 h-8 text-white ml-1" fill="white" />
-            </motion.div>
-          </div>
+              {/* Play button - centered */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  style={{ transformOrigin: "center" }}
+                  className="video-control-button w-20 h-20 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white/50 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300 border-2 border-white/30"
+                >
+                  <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                </motion.div>
+              </div>
+            </>
+          )}
         </motion.div>
       )}
 

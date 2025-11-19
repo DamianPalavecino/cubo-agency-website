@@ -11,7 +11,6 @@ export default function HomePage() {
       <SocialMediaCarousel />
       <Services />
       <Testimonials />
-      {/* <Contact /> */}
     </div>
   );
 }

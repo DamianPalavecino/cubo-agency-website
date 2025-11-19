@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import {
@@ -61,7 +62,13 @@ export default function Contact() {
       </div>
 
       <div className="container mx-auto relative z-10">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Hagamos crecer tu negocio
           </h2>
@@ -69,11 +76,17 @@ export default function Contact() {
             Contáctanos para una consulta gratuita y descubre cómo podemos
             transformar tu presencia digital
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Info */}
-          <div className="space-y-6 animate-fade-in-up">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
             <div className="flex gap-4">
               <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-white/10">
                 <Phone size={24} className="text-white" />
@@ -147,10 +160,16 @@ export default function Contact() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-2"
+          >
             <form
               onSubmit={handleSubmit}
               className="bg-white/[0.04] rounded-xl p-8 border border-white/10 backdrop-blur-sm"
@@ -265,7 +284,7 @@ export default function Contact() {
                 </div>
               )}
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-background text-foreground bg-black`}>
         <Providers>
           <Header />
-          <main className="min-h-[90vh]">{children}</main>
+          <main>{children}</main>
           <Footer />
           <WhatsAppButton />
         </Providers>

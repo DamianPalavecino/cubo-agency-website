@@ -81,7 +81,7 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black text-white overflow-hidden">
+    <footer className="relative bg-black text-white overflow-hidden mb-0 pb-0">
       {/* Background geometric elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -115,7 +115,7 @@ export default function Footer() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20"
+        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8 pt-16 md:pt-20"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12 mb-16">
           {/* Brand section */}
@@ -188,7 +188,7 @@ export default function Footer() {
         {/* Bottom section */}
         <motion.div
           variants={itemVariants}
-          className="border-t border-white/10 py-8 md:py-12"
+          className="border-t border-white/10 pt-8 md:pt-12 pb-8 md:pb-10"
         >
           <div className="flex justify-center items-center">
             <motion.p

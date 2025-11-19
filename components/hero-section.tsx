@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { RiWhatsappFill } from "react-icons/ri";
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import { VideoPlayer } from "@/components/VideoPlayer";
@@ -50,7 +51,7 @@ export function HeroSection() {
   return (
     <div
       id="hero"
-      className="relative w-full min-h-[85vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-12 md:pb-16"
+      className="relative w-full min-h-[85vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center pt-20 md:pt-32 pb-16 md:pb-16"
     >
       {/* Premium geometric background - Isometric design system */}
       <div className="absolute inset-0 overflow-hidden">
@@ -118,6 +119,28 @@ export function HeroSection() {
                     showControls={false}
                     muted={false}
                     loop={false}
+                    overlayContent={
+                      <div className="relative w-full h-full flex flex-col items-center justify-center bg-black p-6 text-center group">
+                        <p className="text-white/90 font-medium text-lg leading-relaxed max-w-[200px] mb-8">
+                          Hace click para conocer más sobre nosotros
+                        </p>
+                        <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+                          <Play
+                            className="w-8 h-8 text-white ml-1"
+                            fill="white"
+                          />
+                        </div>
+                        <div className="relative w-56 h-28 mt-6">
+                          <Image
+                            src="/cubo-logo-small.png"
+                            alt="Cubo Marketing Digital"
+                            fill
+                            className="object-contain"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    }
                   />
                 </div>
               </div>

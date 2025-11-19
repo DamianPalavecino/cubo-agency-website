@@ -80,9 +80,17 @@
   }
   html {
     @apply bg-black;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    min-height: auto;
   }
   body {
     @apply bg-background text-foreground bg-black;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    min-height: auto;
   }
 }
 
