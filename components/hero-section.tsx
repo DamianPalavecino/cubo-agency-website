@@ -3,10 +3,11 @@
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { RiWhatsappFill } from "react-icons/ri";
-import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
+import { VideoPlayer } from "@/components/VideoPlayer";
+import { useVideoPlayer } from "@/hooks/use-video-player";
 
 const GeometricShape = ({
   className,
@@ -29,7 +30,6 @@ const GeometricShape = ({
 );
 
 export function HeroSection() {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -39,17 +39,12 @@ export function HeroSection() {
     }
   };
 
-  const handleVideoClick = () => {
-    setIsVideoPlaying(true);
-  };
-
   const handlePlayButtonClick = () => {
     setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setIsVideoPlaying(false);
   };
 
   return (
@@ -115,58 +110,16 @@ export function HeroSection() {
                 />
 
                 {/* Video container - proper 9:16 aspect ratio */}
-                <div className="relative bg-black rounded-[2rem] overflow-hidden aspect-[9/16] w-full">
-                  {/* Video iframe */}
-                  <iframe
-                    src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=${
-                      isVideoPlaying ? 1 : 0
-                    }&muted=0&controls=0&dnt=1&player_id=0&app_id=58479`}
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    className="w-full h-full"
+                <div className="relative bg-black rounded-[2rem] overflow-hidden">
+                  <VideoPlayer
+                    src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                     title="Cubo Marketing Digital"
+                    thumbnail="/video-thumbnail.png"
+                    containerClassName="rounded-[2rem]"
+                    showControls={false}
+                    muted={false}
+                    loop={false}
                   />
-
-                  {/* Custom thumbnail overlay */}
-                  {!isVideoPlaying && (
-                    <motion.div
-                      initial={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 cursor-pointer group"
-                      onClick={handleVideoClick}
-                    >
-                      {/* Thumbnail image with enhanced visibility */}
-                      <div className="relative w-full h-full bg-[#000000] flex items-center justify-center">
-                        <div className="relative w-[85%] h-[85%]">
-                          <Image
-                            src="/video-thumbnail.png"
-                            alt="Cubo Marketing Digital Video"
-                            fill
-                            className="object-contain brightness-110 contrast-105 saturate-110"
-                            priority
-                          />
-                        </div>
-                        {/* Subtle gradient overlay for better visibility */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
-                      </div>
-
-                      {/* Play button overlay - lighter and more subtle */}
-                      <div className="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                        <motion.div
-                          whileTap={{ scale: 0.95 }}
-                          style={{ transformOrigin: "center" }}
-                          className="w-20 h-20 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white group-hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 border-2 border-white/20 -mt-16"
-                        >
-                          <Play
-                            className="w-8 h-8 text-black ml-1"
-                            fill="black"
-                          />
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  )}
                 </div>
               </div>
             </div>
@@ -221,7 +174,7 @@ export function HeroSection() {
             >
               {/* Primary Button */}
               <motion.a
-                href="https://wa.me/541234567890"
+                href="https://wa.me/5493415958964"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{
@@ -268,13 +221,14 @@ export function HeroSection() {
               <DialogTitle>Cubo Marketing Digital Video</DialogTitle>
             </VisuallyHidden>
             <div className="relative w-full aspect-[9/16] bg-black">
-              <iframe
-                src={`https://player.vimeo.com/video/1135201308?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=0&controls=0&dnt=1&player_id=0&app_id=58479`}
-                frameBorder="0"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                className="w-full h-full"
+              <VideoPlayer
+                key={isModalOpen ? "modal-open" : "modal-closed"}
+                src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                 title="Cubo Marketing Digital"
+                showControls={true}
+                muted={false}
+                loop={false}
+                autoPlay={isModalOpen}
               />
             </div>
           </DialogContent>

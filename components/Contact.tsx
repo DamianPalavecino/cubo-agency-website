@@ -81,10 +81,10 @@ export default function Contact() {
               <div>
                 <h3 className="font-bold text-white mb-1">WhatsApp</h3>
                 <a
-                  href="https://wa.me/541234567890"
+                  href="https://wa.me/5493415958964"
                   className="text-gray-300 hover:text-white transition"
                 >
-                  +54 9 1234 567-890
+                  +54 9 3415 95‑8964
                 </a>
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function Contact() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-[#060b12] border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 transition-all"
-                    placeholder="+54 9 1234 567-890"
+                    placeholder="+54 9 3415 95‑8964"
                   />
                 </div>
 
