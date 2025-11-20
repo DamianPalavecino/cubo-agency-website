@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Share2, TrendingUp, Globe, Check } from "lucide-react";
+import { memo } from "react";
 
 const services = [
   {
@@ -130,17 +131,26 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "0px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
         >
-          {services.map((service) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.id}
-                variants={itemVariants}
-                className="group relative h-full"
-              >
+          {services.map((service) => (
+            <ServiceCard key={service.id} service={service} />
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Memoized service card component
+const ServiceCard = memo(({ service }: { service: typeof services[0] }) => {
+  const Icon = service.icon;
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="group relative h-full"
+    >
                 <div
                   className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10 blur-xl"
                   style={{
@@ -189,11 +199,8 @@ export default function Services() {
                     ))}
                   </ul>
                 </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-    </section>
+    </motion.div>
   );
-}
+});
+
+ServiceCard.displayName = "ServiceCard";

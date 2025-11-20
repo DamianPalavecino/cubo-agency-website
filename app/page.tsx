@@ -1,8 +1,19 @@
-import Contact from "@/components/Contact";
+import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/hero-section";
-import Services from "@/components/Services";
-import Testimonials from "@/components/Testimonials";
-import { SocialMediaCarousel } from "@/components/SocialMediaCarousel";
+
+// Lazy load below-the-fold components
+const SocialMediaCarousel = dynamic(
+  () => import("@/components/SocialMediaCarousel").then((mod) => ({ default: mod.SocialMediaCarousel })),
+  { ssr: true }
+);
+
+const Services = dynamic(() => import("@/components/Services"), {
+  ssr: true,
+});
+
+const Testimonials = dynamic(() => import("@/components/Testimonials"), {
+  ssr: true,
+});
 
 export default function HomePage() {
   return (

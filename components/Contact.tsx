@@ -1,13 +1,9 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import {
-  RiFacebookFill,
-  RiInstagramFill,
-  RiTiktokFill,
-} from "react-icons/ri";
+import { RiFacebookFill, RiInstagramFill, RiTiktokFill } from "react-icons/ri";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -141,7 +137,7 @@ export default function Contact() {
                   <RiInstagramFill size={22} />
                 </a>
                 <a
-                  href="https://facebook.com/Cubo-Marketing-Digital"
+                  href="https://www.facebook.com/people/Cubo-Marketing-Digital/100064493992688/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white hover:bg-white/20 transition-all"

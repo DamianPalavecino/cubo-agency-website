@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import {
   Carousel,
@@ -38,6 +38,136 @@ const testimonialVideos = [
   },
 ];
 
+// Memoized video card component to prevent unnecessary re-renders
+const TestimonialVideoCard = memo(
+  ({
+    video,
+    index,
+  }: {
+    video: (typeof testimonialVideos)[0];
+    index: number;
+  }) => {
+    const [isInView, setIsInView] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            // Unobserve after loading to save resources
+            observer.unobserve(entry.target);
+          }
+        },
+        { rootMargin: "50px" }
+      );
+
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+
+      return () => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      };
+    }, []);
+
+    return (
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300"
+      >
+        {isInView ? (
+          <VideoPlayer
+            src={video.videoUrl}
+            title={video.title}
+            containerClassName="rounded-xl"
+            showControls={false}
+            muted={false}
+            loop={false}
+            darkOverlay={true}
+          />
+        ) : (
+          <div className="aspect-[9/16] bg-black/50 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 border-2 border-white/20 rounded-full animate-spin border-t-white/60" />
+          </div>
+        )}
+      </motion.div>
+    );
+  }
+);
+
+TestimonialVideoCard.displayName = "TestimonialVideoCard";
+
+// Memoized mobile video card with lazy loading
+const MobileVideoCard = memo(
+  ({
+    video,
+    onEnded,
+    index,
+  }: {
+    video: (typeof testimonialVideos)[0];
+    onEnded: () => void;
+    index: number;
+  }) => {
+    const [isInView, setIsInView] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            observer.unobserve(entry.target);
+          }
+        },
+        { rootMargin: "100px" }
+      );
+
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+
+      return () => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      };
+    }, []);
+
+    return (
+      <div
+        ref={ref}
+        className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl h-full"
+      >
+        {isInView ? (
+          <VideoPlayer
+            src={video.videoUrl}
+            title={video.title}
+            containerClassName="rounded-xl"
+            showControls={false}
+            muted={false}
+            loop={false}
+            darkOverlay={true}
+            onEnded={onEnded}
+          />
+        ) : (
+          <div className="aspect-[9/16] bg-black/50 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 border-2 border-white/20 rounded-full animate-spin border-t-white/60" />
+          </div>
+        )}
+      </div>
+    );
+  }
+);
+
+MobileVideoCard.displayName = "MobileVideoCard";
+
 export default function Testimonials() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -67,7 +197,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonios"
-      className="relative pt-12 md:pt-12 pb-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden"
+      className="relative pt-12 md:pt-12 pb-20 sm:px-6 lg:px-8 bg-black overflow-hidden"
     >
       {/* Background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -92,41 +222,36 @@ export default function Testimonials() {
             Cubo
           </p>
         </motion.div>
+      </div>
 
-        {/* Mobile Carousel - Hidden on desktop */}
-        <div className="flex flex-col items-center gap-6 md:hidden w-full">
-          <Carousel
-            setApi={setApi}
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {testimonialVideos.map((video) => (
-                <CarouselItem
-                  key={video.id}
-                  className="pl-4 basis-[85%] sm:basis-[70%]"
-                >
-                  <div className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl h-full">
-                    <VideoPlayer
-                      src={video.videoUrl}
-                      title={video.title}
-                      containerClassName="rounded-xl"
-                      showControls={false}
-                      muted={false}
-                      loop={false}
-                      darkOverlay={true}
-                      onEnded={handleVideoEnd}
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+      {/* Mobile Carousel - Hidden on desktop, full width */}
+      <div className="flex flex-col items-center gap-6 md:hidden w-full mb-6">
+        <Carousel
+          setApi={setApi}
+          opts={{
+            align: "center",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="ml-0">
+            {testimonialVideos.map((video, index) => (
+              <CarouselItem
+                key={video.id}
+                className="pl-4 pr-4 basis-[85%] sm:basis-[70%]"
+              >
+                <MobileVideoCard
+                  video={video}
+                  onEnded={handleVideoEnd}
+                  index={index}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
 
-          {/* Custom Dots Navigation */}
+        {/* Custom Dots Navigation */}
+        <div className="container mx-auto !px-2 sm:!px-8">
           <div className="flex justify-center gap-2 pt-2">
             {testimonialVideos.map((_, index) => (
               <button
@@ -142,28 +267,13 @@ export default function Testimonials() {
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Desktop Grid - Hidden on mobile */}
+      {/* Desktop Grid - Hidden on mobile */}
+      <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonialVideos.map((video, index) => (
-            <motion.div
-              key={video.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300"
-            >
-              <VideoPlayer
-                src={video.videoUrl}
-                title={video.title}
-                containerClassName="rounded-xl"
-                showControls={false}
-                muted={false}
-                loop={false}
-                darkOverlay={true}
-              />
-            </motion.div>
+            <TestimonialVideoCard key={video.id} video={video} index={index} />
           ))}
         </div>
       </div>

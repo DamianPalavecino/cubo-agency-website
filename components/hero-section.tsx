@@ -3,14 +3,15 @@
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { RiWhatsappFill } from "react-icons/ri";
-import { useState, useRef } from "react";
+import { useState, useRef, memo } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { useVideoPlayer } from "@/hooks/use-video-player";
 
-const GeometricShape = ({
+// Memoized geometric shape to prevent unnecessary re-renders
+const GeometricShape = memo(({
   className,
   delay = 0,
 }: {
@@ -28,7 +29,9 @@ const GeometricShape = ({
     }}
     className={className}
   />
-);
+));
+
+GeometricShape.displayName = "GeometricShape";
 
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);

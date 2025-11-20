@@ -8,9 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { id: "servicios", label: "Servicios" },
-  { id: "portfolio", label: "Portfolio" },
   { id: "testimonios", label: "Testimonios" },
-  { id: "contacto", label: "Contacto" },
+  { id: "clientes", label: "Clientes" },
 ];
 
 export default function Header() {
@@ -18,18 +17,31 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (id === "hero") {
+      // Scroll to top of page
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setIsOpen(false);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setIsOpen(false);
+      }
     }
   };
 

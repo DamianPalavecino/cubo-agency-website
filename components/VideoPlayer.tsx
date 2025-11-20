@@ -22,6 +22,7 @@ interface VideoPlayerProps {
   onEnded?: () => void;
   aspectRatio?: string;
   overlayContent?: React.ReactNode;
+  preload?: "none" | "metadata" | "auto";
 }
 
 export function VideoPlayer({
@@ -40,6 +41,7 @@ export function VideoPlayer({
   onEnded,
   aspectRatio = "aspect-[9/16]",
   overlayContent,
+  preload,
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -97,10 +99,10 @@ export function VideoPlayer({
 
   const handleVideoClick = (e: React.MouseEvent) => {
     // Don't toggle if clicking on the button itself
-    if ((e.target as HTMLElement).closest('.video-control-button')) {
+    if ((e.target as HTMLElement).closest(".video-control-button")) {
       return;
     }
-    
+
     if (isPlaying) {
       // Pause if playing
       handlePauseClick();
@@ -111,7 +113,7 @@ export function VideoPlayer({
   };
 
   return (
-    <div 
+    <div
       className={`relative ${containerClassName} ${aspectRatio} overflow-hidden cursor-pointer`}
       onClick={handleVideoClick}
     >
@@ -124,7 +126,9 @@ export function VideoPlayer({
         // Only show native controls when video is playing (to avoid duplicate play buttons)
         controls={showControls && isPlaying}
         loop={loop}
-        preload="metadata"
+        preload={
+          preload !== undefined ? preload : autoplay ? "auto" : "metadata"
+        }
         title={title}
       />
 
@@ -173,8 +177,6 @@ export function VideoPlayer({
           )}
         </motion.div>
       )}
-
     </div>
   );
 }
-

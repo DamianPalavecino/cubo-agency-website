@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 const socialMediaIcons = [
@@ -37,10 +36,8 @@ const socialMediaIcons = [
 ];
 
 export function SocialMediaCarousel() {
-  // Duplicamos los iconos varias veces para asegurar que siempre haya contenido visible
+  // Duplicamos los iconos solo 2 veces para reducir el número de elementos renderizados
   const duplicatedIcons = [
-    ...socialMediaIcons,
-    ...socialMediaIcons,
     ...socialMediaIcons,
     ...socialMediaIcons,
   ];
@@ -55,33 +52,18 @@ export function SocialMediaCarousel() {
   }, 0);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-6"
-    >
+    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-6 animate-slide-in-up">
       {/* Línea horizontal decorativa superior */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       {/* Línea horizontal decorativa inferior */}
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       <div className="relative w-full overflow-hidden">
-        <motion.div
+        <div
           className="flex gap-8 md:gap-16 items-center"
-          style={{ width: "max-content" }}
-          initial={{ x: 0 }}
-          animate={{
-            x: -singleSetWidth,
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 20,
-              ease: "linear",
-            },
+          style={{ 
+            width: "max-content",
+            animation: `social-scroll-${Math.floor(singleSetWidth)} 20s linear infinite`,
           }}
         >
           {duplicatedIcons.map((icon, index) => {
@@ -111,13 +93,26 @@ export function SocialMediaCarousel() {
                     fill
                     className="object-contain"
                     priority={index < 5}
+                    loading={index < 5 ? "eager" : "lazy"}
                   />
                 </div>
               </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes social-scroll-${Math.floor(singleSetWidth)} {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-${singleSetWidth}px);
+            }
+          }
+        `
+      }} />
+    </div>
   );
 }
