@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef, memo, useCallback } from "react";
-import Image from "next/image";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Star, Play } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
@@ -53,13 +52,22 @@ const testimonialVideos = [
 const ThumbnailOverlay = memo(({ brandName }: { brandName: string }) => {
   return (
     <>
-      {/* Dark fade overlay */}
-      <div className="absolute inset-0 bg-black/30 z-10" />
-      {/* Premium gradient overlay for depth - combined into single div for better performance */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/95 z-10 [mask-image:linear-gradient(to_top,black_70%,transparent_30%)]" />
+      {/* Combine overlays into single div to reduce repaints */}
+      <div
+        className="absolute inset-0 z-10"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,0.95) 100%)",
+          willChange: "opacity", // Only animate opacity if needed
+          pointerEvents: "none", // Allow clicks to pass through to VideoPlayer
+        }}
+      />
 
-      {/* Play button centered - using CSS animations instead of framer-motion */}
-      <div className="absolute inset-0 flex items-center justify-center z-20">
+      {/* Play button - use transform for animations */}
+      <div
+        className="absolute inset-0 flex items-center justify-center z-20"
+        style={{ pointerEvents: "none" }}
+      >
         <div className="video-control-button relative animate-scale-in-delayed will-change-transform">
           {/* Subtle glow effect */}
           <div className="absolute inset-0 rounded-full bg-white/10 blur-md" />
@@ -74,8 +82,11 @@ const ThumbnailOverlay = memo(({ brandName }: { brandName: string }) => {
         </div>
       </div>
 
-      {/* Stars and brand name positioned at bottom left */}
-      <div className="absolute bottom-0 left-0 z-20 px-6 sm:px-5 md:px-6 pb-6 sm:pb-5 md:pb-6">
+      {/* Stars and brand name */}
+      <div
+        className="absolute bottom-0 left-0 z-20 px-6 sm:px-5 md:px-6 pb-6 sm:pb-5 md:pb-6"
+        style={{ willChange: "transform", pointerEvents: "none" }}
+      >
         <div className="flex flex-col items-start gap-3 sm:gap-4">
           {/* Stars */}
           <div className="flex gap-2 sm:gap-2 items-center">
@@ -94,60 +105,44 @@ const ThumbnailOverlay = memo(({ brandName }: { brandName: string }) => {
             {/* Main brand name - large and bold */}
             {brandName.toLowerCase().includes("kelis") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
-                  <Image
-                    src="/brands/kelis-logo.png"
-                    alt="Kelis"
-                    fill
-                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
-                  />
-                </div>
+                <img
+                  src="/brands/kelis-logo.png"
+                  alt="Kelis"
+                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                />
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @keliscosmetologia
                 </p>
               </div>
             ) : brandName.toLowerCase().includes("autoescuela") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
-                  <Image
-                    src="/brands/autoescuela-logo-alt.png"
-                    alt="Autoescuela L'École"
-                    fill
-                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
-                  />
-                </div>
+                <img
+                  src="/brands/autoescuela-logo-alt.png"
+                  alt="Autoescuela L'École"
+                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                />
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @autoescuelalecole
                 </p>
               </div>
             ) : brandName.toLowerCase().includes("altiv") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
-                  <Image
-                    src="/brands/altiv-logo.png"
-                    alt="Altiv"
-                    fill
-                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
-                  />
-                </div>
+                <img
+                  src="/brands/altiv-logo.png"
+                  alt="Altiv"
+                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                />
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @altiv.sport
                 </p>
               </div>
             ) : brandName.toLowerCase().includes("piscinas") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
-                  <Image
-                    src="/brands/piscinas-logo.png"
-                    alt="Piscinas Alejandro"
-                    fill
-                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
-                  />
-                </div>
+                <img
+                  src="/brands/piscinas-logo.png"
+                  alt="Piscinas Alejandro"
+                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                />
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @piscinas_alejandroo
                 </p>
@@ -265,9 +260,9 @@ const MobileVideoCard = memo(
             observer.unobserve(entry.target);
           }
         },
-        { 
+        {
           rootMargin: "50px", // Reduced from 100px for better performance
-          threshold: 0.1 // Only trigger when 10% visible
+          threshold: 0.1, // Only trigger when 10% visible
         }
       );
 
@@ -333,20 +328,29 @@ export default function Testimonials() {
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
-    // Throttle state updates using requestAnimationFrame for smoother scrolling
+    // Use passive: true and throttle more aggressively
     let rafId: number | null = null;
+    let lastUpdate = 0;
+    const THROTTLE_MS = 100; // Only update every 100ms during scroll
+
     const handleSelect = () => {
-      if (rafId !== null) return; // Skip if already scheduled
+      const now = Date.now();
+      if (rafId !== null || now - lastUpdate < THROTTLE_MS) return;
+
       rafId = requestAnimationFrame(() => {
         setCurrent(api.selectedScrollSnap() + 1);
+        lastUpdate = Date.now();
         rafId = null;
       });
     };
 
+    // Use 'settle' event instead of 'select' for less frequent updates
     api.on("select", handleSelect);
+    api.on("settle", handleSelect); // Only fires when scroll settles
 
     return () => {
       api?.off("select", handleSelect);
+      api?.off("settle", handleSelect);
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
@@ -431,6 +435,9 @@ export default function Testimonials() {
           opts={{
             align: "center",
             loop: true,
+            duration: 20, // Faster scroll animation
+            dragFree: false, // Disable drag-free for better performance
+            containScroll: "trimSnaps", // Optimize scroll containment
           }}
           className="w-full"
         >
@@ -438,8 +445,8 @@ export default function Testimonials() {
             {testimonialVideos.map((video, index) => (
               <CarouselItem
                 key={video.id}
-                className="pl-4 pr-4 basis-[85%] sm:basis-[70%] will-change-transform"
-                style={{ transform: "translateZ(0)" }} // Force GPU acceleration
+                className="pl-4 pr-4 basis-[85%] sm:basis-[70%]"
+                // Remove transition-all from here - let Embla handle transforms
               >
                 <MobileVideoCard
                   video={video}

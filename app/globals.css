@@ -629,3 +629,23 @@
       filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+
+/* Optimize carousel performance on mobile */
+@media (max-width: 768px) {
+  [role="region"][aria-roledescription="carousel"] {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  
+  [role="group"][aria-roledescription="slide"] {
+    /* Remove any transitions that might interfere with scroll */
+    transition: none !important;
+  }
+}
+
+/* Optimize video containers */
+video {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

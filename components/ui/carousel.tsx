@@ -157,7 +157,14 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div ref={carouselRef} className="overflow-hidden will-change-transform">
+    <div 
+      ref={carouselRef} 
+      className="overflow-hidden will-change-transform"
+      style={{ 
+        touchAction: 'pan-y pinch-zoom', // Optimize touch handling
+        contain: 'layout style paint' // Isolate repaints
+      }}
+    >
       <div
         ref={ref}
         className={cn(
@@ -165,7 +172,11 @@ const CarouselContent = React.forwardRef<
           orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
           className,
         )}
-        style={{ transform: "translateZ(0)" }} // Force GPU acceleration for smoother scrolling
+        style={{ 
+          transform: "translateZ(0)", // Force GPU acceleration for smoother scrolling
+          backfaceVisibility: 'hidden', // Prevent flickering
+          WebkitBackfaceVisibility: 'hidden'
+        }}
         {...props}
       />
     </div>
@@ -189,6 +200,12 @@ const CarouselItem = React.forwardRef<
         orientation === "horizontal" ? "pl-4" : "pt-4",
         className,
       )}
+      style={{
+        transform: "translateZ(0)",
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        contain: 'layout style paint', // Isolate repaints per item
+      }}
       {...props}
     />
   );
