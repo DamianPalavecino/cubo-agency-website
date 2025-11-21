@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState, useEffect, useRef, memo, useCallback } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Star, Play } from "lucide-react";
@@ -48,42 +47,29 @@ const testimonialVideos = [
 ];
 
 // Custom thumbnail overlay component with stars and brand name
+// Optimized: Removed framer-motion, using CSS animations for better mobile performance
 const ThumbnailOverlay = memo(({ brandName }: { brandName: string }) => {
   return (
     <>
       {/* Dark fade overlay */}
       <div className="absolute inset-0 bg-black/30 z-10" />
-      {/* Premium gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/95 z-10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
+      {/* Premium gradient overlay for depth - combined into single div for better performance */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/95 z-10 [mask-image:linear-gradient(to_top,black_70%,transparent_30%)]" />
 
-      {/* Play button centered */}
+      {/* Play button centered - using CSS animations instead of framer-motion */}
       <div className="absolute inset-0 flex items-center justify-center z-20">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.4,
-            delay: 0.2,
-            type: "spring",
-            stiffness: 200,
-          }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ transformOrigin: "center" }}
-          className="video-control-button relative"
-        >
+        <div className="video-control-button relative animate-scale-in-delayed will-change-transform">
           {/* Subtle glow effect */}
           <div className="absolute inset-0 rounded-full bg-white/10 blur-md" />
 
           {/* Main button - clean circular outline like reference */}
-          <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-transparent border-2 border-white/90 flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:border-white group-hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all duration-300">
+          <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-transparent border-2 border-white/90 flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all duration-300 active:scale-95 hover:scale-105 hover:border-white hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]">
             <Play
               className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white ml-0.5 drop-shadow-md"
               fill="white"
             />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Stars and brand name positioned at bottom left */}
@@ -206,13 +192,10 @@ const TestimonialVideoCard = memo(
     }, []);
 
     return (
-      <motion.div
+      <div
         ref={ref}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300"
+        className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300 animate-slide-in-up"
+        style={{ animationDelay: `${index * 0.1}s` }}
       >
         {isInView ? (
           <VideoPlayer
@@ -234,7 +217,7 @@ const TestimonialVideoCard = memo(
             <div className="w-12 h-12 border-2 border-white/20 rounded-full animate-spin border-t-white/60" />
           </div>
         )}
-      </motion.div>
+      </div>
     );
   }
 );
@@ -264,10 +247,14 @@ const MobileVideoCard = memo(
         ([entry]) => {
           if (entry.isIntersecting) {
             setIsInView(true);
+            // Unobserve after loading to save resources
             observer.unobserve(entry.target);
           }
         },
-        { rootMargin: "100px" }
+        { 
+          rootMargin: "50px", // Reduced from 100px for better performance
+          threshold: 0.1 // Only trigger when 10% visible
+        }
       );
 
       if (ref.current) {
@@ -284,13 +271,15 @@ const MobileVideoCard = memo(
     return (
       <div
         ref={ref}
-        className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl h-full"
+        className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl h-full will-change-transform"
+        style={{ transform: "translateZ(0)" }} // Force GPU acceleration
       >
         {isInView ? (
           <VideoPlayer
             ref={(el) => registerVideoRef(video.id, el)}
             src={video.videoUrl}
             title={video.title}
+            thumbnail={video.thumbnail}
             containerClassName="rounded-xl"
             showControls={false}
             muted={false}
@@ -330,9 +319,24 @@ export default function Testimonials() {
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
+    // Throttle state updates using requestAnimationFrame for smoother scrolling
+    let rafId: number | null = null;
+    const handleSelect = () => {
+      if (rafId !== null) return; // Skip if already scheduled
+      rafId = requestAnimationFrame(() => {
+        setCurrent(api.selectedScrollSnap() + 1);
+        rafId = null;
+      });
+    };
+
+    api.on("select", handleSelect);
+
+    return () => {
+      api?.off("select", handleSelect);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, [api]);
 
   // Register/unregister video refs
@@ -393,13 +397,8 @@ export default function Testimonials() {
       </div>
 
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        {/* Use CSS animation for better performance */}
+        <div className="text-center mb-16 animate-slide-in-up">
           <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
             Lo que dicen nuestros clientes
           </h2>
@@ -407,7 +406,7 @@ export default function Testimonials() {
             Testimonios en video de clientes que transformaron su negocio con
             Cubo
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Mobile Carousel - Hidden on desktop, full width */}
@@ -424,7 +423,8 @@ export default function Testimonials() {
             {testimonialVideos.map((video, index) => (
               <CarouselItem
                 key={video.id}
-                className="pl-4 pr-4 basis-[85%] sm:basis-[70%]"
+                className="pl-4 pr-4 basis-[85%] sm:basis-[70%] will-change-transform"
+                style={{ transform: "translateZ(0)" }} // Force GPU acceleration
               >
                 <MobileVideoCard
                   video={video}

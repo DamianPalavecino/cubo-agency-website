@@ -112,38 +112,31 @@ const Header = memo(function Header() {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
               {navItems.map((item, i) => (
-                <motion.button
+                <button
                   key={item.id}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: i * 0.05 }}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-sm font-medium text-gray-300 hover:text-white px-4 py-2 rounded-lg hover:bg-white/5 transition-all duration-300 relative group"
+                  className="text-sm font-medium text-gray-300 hover:text-white px-4 py-2 rounded-lg hover:bg-white/5 transition-all duration-300 relative group animate-slide-in-down"
+                  style={{ animationDelay: `${i * 0.05}s` }}
                 >
                   {item.label}
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] group-hover:w-6 transition-all duration-300" />
-                </motion.button>
+                </button>
               ))}
             </div>
 
             {/* CTA Button */}
-            <motion.a
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <a
               href="https://wa.me/5493415958964"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-[0_8px_24px_rgba(255,44,36,0.4)] transition-all duration-300 group relative overflow-hidden"
+              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-[0_8px_24px_rgba(255,44,36,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 group relative overflow-hidden animate-slide-in-right-delayed"
             >
               <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
               <RiWhatsappFill className="relative z-10 w-4 h-4" />
               <span className="relative z-10 whitespace-nowrap">
                 Chatea con nosotros
               </span>
-            </motion.a>
+            </a>
 
             {/* Mobile Menu Button */}
             <button

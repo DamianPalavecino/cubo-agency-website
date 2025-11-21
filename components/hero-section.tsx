@@ -3,12 +3,11 @@
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { RiWhatsappFill } from "react-icons/ri";
-import { useState, useRef, memo } from "react";
+import { useState, memo } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import { VideoPlayer } from "@/components/VideoPlayer";
-import { useVideoPlayer } from "@/hooks/use-video-player";
 
 // Memoized geometric shape to prevent unnecessary re-renders
 const GeometricShape = memo(
@@ -87,92 +86,54 @@ export function HeroSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left: Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left justify-center order-2 lg:order-1 lg:pl-8"
-          >
+          <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left justify-center order-2 lg:order-1 lg:pl-8 animate-slide-in-left-delayed">
             {/* Main Heading */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] md:leading-[1.3] tracking-tight flex flex-col md:gap-1"
-            >
+            <h1 className="text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] md:leading-[1.3] tracking-tight flex flex-col md:gap-1 animate-slide-in-up-delayed-1">
               <span className="text-white font-bold text-4xl md:text-4xl lg:text-5xl xl:text-6xl block">
                 Transformamos tu
               </span>
-              <motion.span
-                className="inline-block relative font-black"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
+              <span className="inline-block relative font-black animate-slide-in-up-delayed-3">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0]">
                   Presencia Digital
                 </span>
-              </motion.span>
-            </motion.h1>
+              </span>
+            </h1>
 
             {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-base md:text-lg lg:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
-            >
+            <p className="text-base md:text-lg lg:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light animate-slide-in-up-delayed-2">
               Campañas de marketing estratégicas, diseño web impresionante e
               historias de marca poderosas que generan resultados medibles.
               Elevemos tu negocio juntos.
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start"
-            >
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start animate-slide-in-up-delayed-3">
               {/* Primary Button */}
-              <motion.a
+              <a
                 href="https://wa.me/5493415958964"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{
-                  boxShadow: "0 20px 50px rgba(255, 44, 36, 0.4)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2"
+                className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-[0_20px_50px_rgba(255,44,36,0.4)] active:scale-95 transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
                 <RiWhatsappFill className="relative z-10 w-5 h-5" />
                 <span className="relative z-10">Comienza Hoy</span>
-              </motion.a>
+              </a>
 
               {/* Play Video Button - Visible on mobile */}
-              <motion.button
-                whileHover={{
-                  boxShadow: "0 20px 50px rgba(39, 199, 224, 0.4)",
-                }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={handlePlayButtonClick}
-                className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#27C7E0] to-[#27C7E0] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2 border border-[#27C7E0]/50 lg:hidden"
+                className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#27C7E0] to-[#27C7E0] hover:shadow-[0_20px_50px_rgba(39,199,224,0.4)] active:scale-95 transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2 border border-[#27C7E0]/50 lg:hidden"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
                 <Play className="relative z-10 w-5 h-5 fill-white" />
                 <span className="relative z-10">Conoce más</span>
-              </motion.button>
-            </motion.div>
-          </motion.div>
+              </button>
+            </div>
+          </div>
 
           {/* Right: Video Frame - Hidden on mobile, visible on desktop */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:flex justify-center items-center w-full order-1 lg:order-2 lg:ml-8"
-          >
+          <div className="hidden lg:flex justify-center items-center w-full order-1 lg:order-2 lg:ml-8 animate-slide-in-right-delayed">
             <div className="relative w-full max-w-[340px]">
               {/* Video container */}
               <div className="w-full relative">
@@ -251,7 +212,7 @@ export function HeroSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Video Modal for Mobile */}

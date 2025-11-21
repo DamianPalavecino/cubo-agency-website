@@ -157,7 +157,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div ref={carouselRef} className="overflow-hidden will-change-transform">
       <div
         ref={ref}
         className={cn(
@@ -165,6 +165,7 @@ const CarouselContent = React.forwardRef<
           orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
           className,
         )}
+        style={{ transform: "translateZ(0)" }} // Force GPU acceleration for smoother scrolling
         {...props}
       />
     </div>

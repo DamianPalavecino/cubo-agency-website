@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ExternalLink, TrendingUp } from "lucide-react";
 
 const caseStudies = [
@@ -103,13 +102,7 @@ export default function Portfolio() {
       className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#070b15] to-[#05080e]"
     >
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16 animate-slide-in-up">
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Portfolio de Casos de Éxito
           </h2>
@@ -117,18 +110,24 @@ export default function Portfolio() {
             Proyectos reales con resultados comprobados que transformaron
             negocios
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {caseStudies.map((study, index) => (
-            <motion.div
-              key={study.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all duration-300"
-            >
+          {caseStudies.map((study, index) => {
+            const delayClasses = [
+              "animate-slide-in-up-delayed-13",
+              "animate-slide-in-up-delayed-14",
+              "animate-slide-in-up-delayed-15",
+              "animate-slide-in-up-delayed-16",
+              "animate-slide-in-up-delayed-17",
+              "animate-slide-in-up-delayed-18",
+            ];
+            const delayClass = delayClasses[index] || "animate-slide-in-up";
+            return (
+              <div
+                key={study.id}
+                className={`group bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all duration-300 ${delayClass}`}
+              >
               {/* Image */}
               <div
                 className={`h-40 ${study.image} relative overflow-hidden group-hover:scale-105 transition-transform duration-300`}
@@ -175,18 +174,13 @@ export default function Portfolio() {
                   ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
+            </div>
+            );
+          })}
         </div>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 text-center"
-        >
+        <div className="mt-12 text-center animate-slide-in-up-delayed-19">
           <a
             href="https://wa.me/5493415958964"
             target="_blank"

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { memo } from "react";
 
@@ -133,34 +132,16 @@ const clients = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
 // Memoized client logo card component
 const ClientLogoCard = memo(
   ({ client, index }: { client: (typeof clients)[0]; index: number }) => {
+    // Create staggered delay based on index
+    const delayClass = `animate-slide-in-up`; // Will use inline style for precise delays
+    const delay = index * 0.1;
     return (
-      <motion.div
-        variants={itemVariants}
-        className="group relative flex items-center justify-center p-4"
+      <div
+        className="group relative flex items-center justify-center p-4 animate-slide-in-up"
+        style={{ animationDelay: `${delay}s` }}
       >
         {/* Logo */}
         <Image
@@ -174,7 +155,7 @@ const ClientLogoCard = memo(
               : "max-w-24 md:max-w-32 max-h-full"
           }`}
         />
-      </motion.div>
+      </div>
     );
   }
 );
@@ -195,32 +176,20 @@ export default function Clientes() {
       </div>
 
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16 animate-slide-in-up">
           <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
             Marcas que confiaron en nosotros
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Negocios que han crecido en redes sociales con nuestras estrategias
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "0px" }}
-          className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-x-6 md:gap-y-3"
-        >
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-x-6 md:gap-y-3">
           {clients.map((client, index) => (
             <ClientLogoCard key={client.id} client={client} index={index} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

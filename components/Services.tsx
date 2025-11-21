@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Share2, TrendingUp, Globe, Check } from "lucide-react";
 import { memo } from "react";
 
@@ -55,26 +54,6 @@ const services = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
 
 export default function Services() {
   return (
@@ -111,13 +90,7 @@ export default function Services() {
       </div>
 
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
+        <div className="text-center mb-20 animate-slide-in-up">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-6 tracking-tight">
             Nuestros Servicios
           </h2>
@@ -125,32 +98,30 @@ export default function Services() {
             Soluciones completas de marketing digital para hacer crecer tu
             negocio en línea
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "0px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
-        >
-          {services.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          {services.map((service, index) => {
+            const delayClass = [
+              "animate-slide-in-up-delayed-4",
+              "animate-slide-in-up-delayed-5",
+              "animate-slide-in-up-delayed-6",
+            ][index] || "animate-slide-in-up";
+            return (
+              <ServiceCard key={service.id} service={service} delayClass={delayClass} />
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
 
 // Memoized service card component
-const ServiceCard = memo(({ service }: { service: typeof services[0] }) => {
+const ServiceCard = memo(({ service, delayClass }: { service: typeof services[0]; delayClass: string }) => {
   const Icon = service.icon;
   return (
-    <motion.div
-      variants={itemVariants}
-      className="group relative h-full"
-    >
+    <div className={`group relative h-full ${delayClass}`}>
                 <div
                   className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10 blur-xl"
                   style={{
@@ -199,7 +170,7 @@ const ServiceCard = memo(({ service }: { service: typeof services[0] }) => {
                     ))}
                   </ul>
                 </div>
-    </motion.div>
+    </div>
   );
 });
 

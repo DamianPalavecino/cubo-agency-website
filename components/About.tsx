@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { CheckCircle, Users, Lightbulb, Target } from "lucide-react";
 
 const values = [
@@ -62,12 +61,7 @@ export default function About() {
       <div className="container mx-auto">
         {/* Main content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="animate-slide-in-up">
             <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
               Sobre Cubo Marketing Digital
             </h2>
@@ -86,15 +80,9 @@ export default function About() {
               marketing digital, con la experiencia y conocimiento necesario
               para hacer crecer tu negocio en línea.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative"
-          >
+          <div className="relative animate-slide-in-up-delayed-1">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gradient-to-br from-white/10 to-transparent rounded-xl p-8 h-48 flex items-center justify-center border border-white/10">
                 <div className="text-center">
@@ -125,73 +113,68 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Values */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-20"
-        >
+        <div className="mb-20 animate-slide-in-up-delayed-2">
           <h3 className="text-3xl font-bold text-white mb-12 text-center">
             Nuestros Valores
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => {
               const Icon = value.icon;
+              const delayClass = [
+                "animate-slide-in-up-delayed-4",
+                "animate-slide-in-up-delayed-5",
+                "animate-slide-in-up-delayed-6",
+                "animate-slide-in-up-delayed-7",
+              ][index] || "animate-slide-in-up";
               return (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  className="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all"
+                  className={`bg-white/5 rounded-xl p-6 border border-white/10 hover:border-cyan/60 hover:bg-white/10 transition-all ${delayClass}`}
                 >
                   <div className="mb-4">
                     <Icon size={32} className="text-white" />
                   </div>
                   <h4 className="font-bold text-white mb-2">{value.title}</h4>
                   <p className="text-gray-300 text-sm">{value.description}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* Team */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
+        <div className="animate-slide-in-up-delayed-3">
           <h3 className="text-3xl font-bold text-white mb-12 text-center">
             Nuestro Equipo
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                className="bg-white/5 rounded-xl p-6 border border-white/10 text-center hover:border-cyan/60 transition-all"
-              >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-cyan to-blue-400 rounded-full border border-white/10"></div>
-                <h4 className="font-bold text-white mb-1">{member.name}</h4>
-                <p className="text-sm text-gray-300 font-semibold mb-2">
-                  {member.role}
-                </p>
-                <p className="text-xs text-gray-400">{member.specialty}</p>
-              </motion.div>
-            ))}
+            {team.map((member, index) => {
+              const delayClass = [
+                "animate-slide-in-up-delayed-8",
+                "animate-slide-in-up-delayed-9",
+                "animate-slide-in-up-delayed-10",
+                "animate-slide-in-up-delayed-11",
+              ][index] || "animate-slide-in-up";
+              return (
+                <div
+                  key={index}
+                  className={`bg-white/5 rounded-xl p-6 border border-white/10 text-center hover:border-cyan/60 transition-all ${delayClass}`}
+                >
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-cyan to-blue-400 rounded-full border border-white/10"></div>
+                  <h4 className="font-bold text-white mb-1">{member.name}</h4>
+                  <p className="text-sm text-gray-300 font-semibold mb-2">
+                    {member.role}
+                  </p>
+                  <p className="text-xs text-gray-400">{member.specialty}</p>
+                </div>
+              );
+            })}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
