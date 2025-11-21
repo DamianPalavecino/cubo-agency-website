@@ -138,22 +138,7 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
         className={`relative ${containerClassName} ${aspectRatio} overflow-hidden cursor-pointer`}
         onClick={handleVideoClick}
       >
-        <video
-          ref={setRefs}
-          src={src}
-          className={`w-full h-full object-cover ${className}`}
-          playsInline
-          muted={muted}
-          // Only show native controls when video is playing (to avoid duplicate play buttons)
-          controls={showControls && isPlaying}
-          loop={loop}
-          preload={
-            preload !== undefined ? preload : autoplay ? "auto" : "none"
-          }
-          title={title}
-        />
-
-        {/* Thumbnail image if provided - show behind video when not playing */}
+        {/* Thumbnail image if provided - show when video is not playing */}
         {!isPlaying && thumbnail && (
           <div className="absolute inset-0 z-0">
             <Image
@@ -164,6 +149,22 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
             />
           </div>
         )}
+
+        <video
+          ref={setRefs}
+          src={src}
+          className={`w-full h-full object-cover ${className} ${!isPlaying && thumbnail ? 'opacity-0' : ''}`}
+          playsInline
+          muted={muted}
+          // Only show native controls when video is playing (to avoid duplicate play buttons)
+          controls={showControls && isPlaying}
+          loop={loop}
+          preload={
+            preload !== undefined ? preload : autoplay ? "auto" : "none"
+          }
+          title={title}
+          poster={thumbnail}
+        />
 
         {/* Play button overlay - shows when video is not playing */}
         {!isPlaying && (
