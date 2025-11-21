@@ -133,7 +133,7 @@ export default function Contact() {
                   <RiFacebookFill size={22} />
                 </a>
                 <a
-                  href="https://tiktok.com/@Cubo-Marketing-Digital"
+                  href="https://www.tiktok.com/@cubo.marketing.di"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white hover:bg-white/20 transition-all"

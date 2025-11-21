@@ -2,6 +2,7 @@
 
 import { Share2, TrendingUp, Globe, Check } from "lucide-react";
 import { memo } from "react";
+import { ScrollReveal } from "./ScrollReveal";
 
 const services = [
   {
@@ -90,7 +91,8 @@ export default function Services() {
       </div>
 
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
-        <div className="text-center mb-20 animate-slide-in-up">
+        <ScrollReveal direction="up" delay={0} duration={0.7}>
+          <div className="text-center mb-20">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-6 tracking-tight">
             Nuestros Servicios
           </h2>
@@ -98,17 +100,20 @@ export default function Services() {
             Soluciones completas de marketing digital para hacer crecer tu
             negocio en línea
           </p>
-        </div>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {services.map((service, index) => {
-            const delayClass = [
-              "animate-slide-in-up-delayed-4",
-              "animate-slide-in-up-delayed-5",
-              "animate-slide-in-up-delayed-6",
-            ][index] || "animate-slide-in-up";
             return (
-              <ServiceCard key={service.id} service={service} delayClass={delayClass} />
+              <ScrollReveal
+                key={service.id}
+                direction="up"
+                delay={index * 0.1}
+                duration={0.6}
+              >
+                <ServiceCard service={service} />
+              </ScrollReveal>
             );
           })}
         </div>
@@ -118,10 +123,10 @@ export default function Services() {
 }
 
 // Memoized service card component
-const ServiceCard = memo(({ service, delayClass }: { service: typeof services[0]; delayClass: string }) => {
+const ServiceCard = memo(({ service }: { service: typeof services[0] }) => {
   const Icon = service.icon;
   return (
-    <div className={`group relative h-full ${delayClass}`}>
+    <div className="group relative h-full">
                 <div
                   className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10 blur-xl"
                   style={{

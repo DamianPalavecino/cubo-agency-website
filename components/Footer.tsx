@@ -15,7 +15,7 @@ const socialLinks = [
   },
   {
     icon: RiTiktokFill,
-    href: "https://tiktok.com/@Cubo-Marketing-Digital",
+    href: "https://www.tiktok.com/@cubo.marketing.di",
     label: "TikTok",
   },
 ];
@@ -33,18 +33,20 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           {/* Social Links - Left */}
           <div className="flex gap-3">
-            {socialLinks.map((social, i) => (
-              <a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:border-white/30 hover:text-white hover:scale-110 active:scale-90 transition-all duration-300"
-                aria-label={social.label}
-              >
-                <social.icon className="w-6 h-6" />
-              </a>
-            ))}
+            {socialLinks.map((social, i) => {
+              return (
+                <a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/20 hover:scale-110 active:scale-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-7 h-7" />
+                </a>
+              );
+            })}
           </div>
 
           {/* Copyright - Right */}

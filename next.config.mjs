@@ -11,7 +11,7 @@ const nextConfig = {
   poweredByHeader: false,
   // Optimize bundle size
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react'],
   },
 };
 

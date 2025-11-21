@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef, memo, useCallback } from "react";
+import Image from "next/image";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Star, Play } from "lucide-react";
+import { ScrollReveal } from "./ScrollReveal";
 import {
   Carousel,
   CarouselContent,
@@ -92,48 +94,60 @@ const ThumbnailOverlay = memo(({ brandName }: { brandName: string }) => {
             {/* Main brand name - large and bold */}
             {brandName.toLowerCase().includes("kelis") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <img
-                  src="/brands/kelis-logo.png"
-                  alt="Kelis"
-                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                  style={{ aspectRatio: "auto" }}
-                />
+                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
+                  <Image
+                    src="/brands/kelis-logo.png"
+                    alt="Kelis"
+                    fill
+                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
+                  />
+                </div>
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @keliscosmetologia
                 </p>
               </div>
             ) : brandName.toLowerCase().includes("autoescuela") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <img
-                  src="/brands/autoescuela-logo-alt.png"
-                  alt="Autoescuela L'École"
-                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                  style={{ aspectRatio: "auto" }}
-                />
+                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
+                  <Image
+                    src="/brands/autoescuela-logo-alt.png"
+                    alt="Autoescuela L'École"
+                    fill
+                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
+                  />
+                </div>
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @autoescuelalecole
                 </p>
               </div>
             ) : brandName.toLowerCase().includes("altiv") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <img
-                  src="/brands/altiv-logo.png"
-                  alt="Altiv"
-                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                  style={{ aspectRatio: "auto" }}
-                />
+                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
+                  <Image
+                    src="/brands/altiv-logo.png"
+                    alt="Altiv"
+                    fill
+                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
+                  />
+                </div>
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @altiv.sport
                 </p>
               </div>
             ) : brandName.toLowerCase().includes("piscinas") ? (
               <div className="flex flex-col gap-2 sm:gap-2 max-w-fit">
-                <img
-                  src="/brands/piscinas-logo.png"
-                  alt="Piscinas Alejandro"
-                  className="h-20 sm:h-12 md:h-14 lg:h-16 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
-                  style={{ aspectRatio: "auto" }}
-                />
+                <div className="relative h-20 sm:h-12 md:h-14 lg:h-16 w-auto">
+                  <Image
+                    src="/brands/piscinas-logo.png"
+                    alt="Piscinas Alejandro"
+                    fill
+                    className="object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+                    sizes="(max-width: 640px) 80px, (max-width: 768px) 56px, (max-width: 1024px) 64px, 80px"
+                  />
+                </div>
                 <p className="text-white font-light text-sm sm:text-xs tracking-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
                   @piscinas_alejandroo
                 </p>
@@ -397,16 +411,17 @@ export default function Testimonials() {
       </div>
 
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
-        {/* Use CSS animation for better performance */}
-        <div className="text-center mb-16 animate-slide-in-up">
-          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
-            Lo que dicen nuestros clientes
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Testimonios en video de clientes que transformaron su negocio con
-            Cubo
-          </p>
-        </div>
+        <ScrollReveal direction="up" delay={0} duration={0.7}>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
+              Lo que dicen nuestros clientes
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Testimonios en video de clientes que transformaron su negocio con
+              Cubo
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
 
       {/* Mobile Carousel - Hidden on desktop, full width */}
@@ -461,13 +476,19 @@ export default function Testimonials() {
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonialVideos.map((video, index) => (
-            <TestimonialVideoCard
+            <ScrollReveal
               key={video.id}
-              video={video}
-              index={index}
-              onPlay={() => handleVideoPlay(video.id)}
-              registerVideoRef={registerVideoRef}
-            />
+              direction="up"
+              delay={index * 0.1}
+              duration={0.6}
+            >
+              <TestimonialVideoCard
+                video={video}
+                index={index}
+                onPlay={() => handleVideoPlay(video.id)}
+                registerVideoRef={registerVideoRef}
+              />
+            </ScrollReveal>
           ))}
         </div>
       </div>

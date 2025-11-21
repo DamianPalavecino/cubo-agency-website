@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Play } from "lucide-react";
-import { RiWhatsappFill } from "react-icons/ri";
+import { RiWhatsappFill, RiFacebookFill, RiInstagramFill, RiTiktokFill } from "react-icons/ri";
 import { useState, memo } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -12,21 +11,31 @@ import { VideoPlayer } from "@/components/VideoPlayer";
 // Memoized geometric shape to prevent unnecessary re-renders
 const GeometricShape = memo(
   ({ className, delay = 0 }: { className: string; delay?: number }) => (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0.3, 0.6, 0.3] }}
-      transition={{
-        duration: 6,
-        delay,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      className={className}
+    <div
+      className={`${className} ${delay > 0 ? "animate-pulse-opacity-delayed" : "animate-pulse-opacity"} will-change-[opacity,transform]`}
     />
   )
 );
 
 GeometricShape.displayName = "GeometricShape";
+
+const socialLinks = [
+  {
+    icon: RiInstagramFill,
+    href: "https://instagram.com/Cubo_agencia_de_marketing",
+    label: "Instagram",
+  },
+  {
+    icon: RiFacebookFill,
+    href: "https://www.facebook.com/people/Cubo-Marketing-Digital/100064493992688/",
+    label: "Facebook",
+  },
+  {
+    icon: RiTiktokFill,
+    href: "https://www.tiktok.com/@cubo.marketing.di",
+    label: "TikTok",
+  },
+];
 
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -130,6 +139,26 @@ export function HeroSection() {
                 <span className="relative z-10">Conoce más</span>
               </button>
             </div>
+
+            {/* Social Links Separator and Buttons */}
+            <div className="my-3 animate-slide-in-up-delayed-4">
+              <div className="flex gap-3 justify-center lg:justify-start pt-3">
+                {socialLinks.map((social, i) => {
+                  return (
+                    <a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/20 hover:scale-110 active:scale-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-7 h-7" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Right: Video Frame - Hidden on mobile, visible on desktop */}
@@ -138,17 +167,8 @@ export function HeroSection() {
               {/* Video container */}
               <div className="w-full relative">
                 {/* Multi-color glow effect - adjusted for new size */}
-                <motion.div
-                  className="absolute -inset-8 bg-gradient-to-r from-[#FF2C24]/40 from-30% via-[#FFD74A]/40 via-75% to-[#27C7E0]/40 rounded-[4rem] blur-3xl"
-                  animate={{
-                    opacity: [0.4, 0.7, 0.4],
-                    scale: [0.95, 1.05, 0.95],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                <div
+                  className="absolute -inset-8 bg-gradient-to-r from-[#FF2C24]/40 from-30% via-[#FFD74A]/40 via-75% to-[#27C7E0]/40 rounded-[4rem] blur-3xl animate-glow-pulse will-change-[opacity,transform]"
                 />
 
                 {/* Phone Frame Structure */}

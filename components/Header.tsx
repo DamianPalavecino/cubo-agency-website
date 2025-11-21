@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState, useEffect, memo, useCallback, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { RiWhatsappFill } from "react-icons/ri";
-import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { id: "hero", label: "Inicio" },
@@ -64,23 +63,16 @@ const Header = memo(function Header() {
   return (
     <>
       {/* Mobile Navigation Overlay - Outside header to ensure proper z-index */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[40] lg:hidden"
-            onClick={closeMenu}
-          />
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[40] lg:hidden animate-fade-in"
+          onClick={closeMenu}
+        />
+      )}
 
       <header className="fixed top-0 left-0 right-0 z-[100]">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6 lg:px-8">
-          <motion.nav
-            initial={false}
+          <nav
             className={`flex h-16 md:h-20 items-center justify-between pl-3 pr-4 md:pl-4 md:pr-6 lg:pl-8 lg:pr-10 my-3 md:my-6 border transition-all duration-300 ${
               isOpen
                 ? "rounded-t-2xl md:rounded-3xl"
@@ -92,7 +84,7 @@ const Header = memo(function Header() {
             }`}
           >
             {/* Logo */}
-            <motion.button
+            <button
               onClick={() => scrollToSection("hero")}
               className="flex items-center cursor-pointer group relative -ml-2 md:-ml-0"
               aria-label="Ir al inicio"
@@ -107,7 +99,7 @@ const Header = memo(function Header() {
                   priority
                 />
               </div>
-            </motion.button>
+            </button>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
@@ -148,45 +140,39 @@ const Header = memo(function Header() {
             </button>
 
             {/* Mobile Navigation */}
-            <AnimatePresence>
-              {isOpen && (
-                <motion.div
-                  initial={{ y: "-100%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: "-100%", opacity: 0 }}
-                  transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-                  className="fixed top-[76px] md:top-[92px] left-0 right-0 z-[70] lg:hidden pointer-events-none"
-                >
-                  <div className="mx-auto w-full max-w-7xl px-4 pointer-events-auto">
-                    <div className="bg-gradient-to-b from-black to-black/95 border-l border-r border-b border-white/10 rounded-b-2xl shadow-2xl overflow-hidden">
-                      <div className="pt-6 pl-4 pr-6 pb-6 flex flex-col">
-                        <div className="space-y-2">
-                          {navItems.map((item) => (
-                            <button
-                              key={item.id}
-                              onClick={() => scrollToSection(item.id)}
-                              className="block w-full text-left px-4 py-3 text-base md:text-lg text-gray-200 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 font-medium"
-                            >
-                              {item.label}
-                            </button>
-                          ))}
-                        </div>
-                        <a
-                          href="https://wa.me/5493415958964"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 px-4 py-3.5 md:py-4 mt-4 rounded-lg font-semibold text-base md:text-lg text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-lg transition-all duration-300"
-                        >
-                          <RiWhatsappFill className="w-5 h-5 md:w-6 md:h-6" />
-                          Chatea con nosotros
-                        </a>
+            {isOpen && (
+              <div
+                className="fixed top-[76px] md:top-[92px] left-0 right-0 z-[70] lg:hidden pointer-events-none animate-slide-down"
+              >
+                <div className="mx-auto w-full max-w-7xl px-4 pointer-events-auto">
+                  <div className="bg-gradient-to-b from-black to-black/95 border-l border-r border-b border-white/10 rounded-b-2xl shadow-2xl overflow-hidden">
+                    <div className="pt-6 pl-4 pr-6 pb-6 flex flex-col">
+                      <div className="space-y-2">
+                        {navItems.map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => scrollToSection(item.id)}
+                            className="block w-full text-left px-4 py-3 text-base md:text-lg text-gray-200 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 font-medium"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
                       </div>
+                      <a
+                        href="https://wa.me/5493415958964"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-4 py-3.5 md:py-4 mt-4 rounded-lg font-semibold text-base md:text-lg text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-lg transition-all duration-300"
+                      >
+                        <RiWhatsappFill className="w-5 h-5 md:w-6 md:h-6" />
+                        Chatea con nosotros
+                      </a>
                     </div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.nav>
+                </div>
+              </div>
+            )}
+          </nav>
         </div>
       </header>
     </>

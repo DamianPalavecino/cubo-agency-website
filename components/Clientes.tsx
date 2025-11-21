@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { memo } from "react";
+import { ScrollReveal } from "./ScrollReveal";
 
 const clients = [
   {
@@ -135,14 +136,9 @@ const clients = [
 // Memoized client logo card component
 const ClientLogoCard = memo(
   ({ client, index }: { client: (typeof clients)[0]; index: number }) => {
-    // Create staggered delay based on index
-    const delayClass = `animate-slide-in-up`; // Will use inline style for precise delays
-    const delay = index * 0.1;
     return (
-      <div
-        className="group relative flex items-center justify-center p-4 animate-slide-in-up"
-        style={{ animationDelay: `${delay}s` }}
-      >
+      <ScrollReveal direction="scale" delay={index * 0.05} duration={0.5}>
+        <div className="group relative flex items-center justify-center p-4">
         {/* Logo */}
         <Image
           src={client.logo}
@@ -155,7 +151,8 @@ const ClientLogoCard = memo(
               : "max-w-24 md:max-w-32 max-h-full"
           }`}
         />
-      </div>
+        </div>
+      </ScrollReveal>
     );
   }
 );
@@ -176,14 +173,16 @@ export default function Clientes() {
       </div>
 
       <div className="container mx-auto relative z-10 !px-2 sm:!px-8">
-        <div className="text-center mb-16 animate-slide-in-up">
-          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
-            Marcas que confiaron en nosotros
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Negocios que han crecido en redes sociales con nuestras estrategias
-          </p>
-        </div>
+        <ScrollReveal direction="up" delay={0} duration={0.7}>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF2C24] from-40% via-[#FFD74A] via-70% to-[#27C7E0] mb-4">
+              Marcas que confiaron en nosotros
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Negocios que han crecido en redes sociales con nuestras estrategias
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-x-6 md:gap-y-3">
           {clients.map((client, index) => (

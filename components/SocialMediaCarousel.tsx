@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ScrollReveal } from "./ScrollReveal";
 
 const socialMediaIcons = [
   {
@@ -52,7 +53,8 @@ export function SocialMediaCarousel() {
   }, 0);
 
   return (
-    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-6 mt-1 mb-12 md:mt-0 md:mb-0 animate-slide-in-up">
+    <ScrollReveal direction="up" delay={0.1} duration={0.7}>
+      <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-6 mt-1 mb-12 md:mt-0 md:mb-0">
       {/* Línea horizontal decorativa superior */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       {/* Línea horizontal decorativa inferior */}
@@ -60,11 +62,11 @@ export function SocialMediaCarousel() {
 
       <div className="relative w-full overflow-hidden">
         <div
-          className="flex gap-8 md:gap-16 items-center"
+          className="flex gap-8 md:gap-16 items-center animate-social-scroll will-change-transform"
           style={{ 
             width: "max-content",
-            animation: `social-scroll-${Math.floor(singleSetWidth)} 20s linear infinite`,
-          }}
+            "--social-scroll-width": `${singleSetWidth}px`,
+          } as React.CSSProperties & { "--social-scroll-width": string }}
         >
           {duplicatedIcons.map((icon, index) => {
             // Calcular el ancho basado en el aspect ratio para mantener proporción
@@ -101,18 +103,7 @@ export function SocialMediaCarousel() {
           })}
         </div>
       </div>
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          @keyframes social-scroll-${Math.floor(singleSetWidth)} {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-${singleSetWidth}px);
-            }
-          }
-        `
-      }} />
-    </div>
+      </div>
+    </ScrollReveal>
   );
 }
