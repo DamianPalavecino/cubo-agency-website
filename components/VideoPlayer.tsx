@@ -164,7 +164,9 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
           // Only show native controls when video is playing (to avoid duplicate play buttons)
           controls={showControls && isPlaying}
           loop={loop}
-          preload={preload !== undefined ? preload : autoplay ? "auto" : "none"}
+          preload={
+            preload !== undefined ? preload : autoplay ? "auto" : "metadata"
+          }
           title={title}
           poster={thumbnail}
         />
