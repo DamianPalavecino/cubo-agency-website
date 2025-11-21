@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useCallback, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { RiWhatsappFill } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,16 +12,23 @@ const navItems = [
   { id: "clientes", label: "Clientes" },
 ];
 
-export default function Header() {
+const Header = memo(function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const lastScrolledValueRef = useRef(false);
 
   useEffect(() => {
     let ticking = false;
+    
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 50);
+          const newScrolledValue = window.scrollY > 50;
+          // Only update state if the value actually changed
+          if (newScrolledValue !== lastScrolledValueRef.current) {
+            setScrolled(newScrolledValue);
+            lastScrolledValueRef.current = newScrolledValue;
+          }
           ticking = false;
         });
         ticking = true;
@@ -31,7 +38,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     if (id === "hero") {
       // Scroll to top of page
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -43,7 +50,15 @@ export default function Header() {
         setIsOpen(false);
       }
     }
-  };
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <>
@@ -56,7 +71,7 @@ export default function Header() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[40] lg:hidden"
-            onClick={() => setIsOpen(false)}
+            onClick={closeMenu}
           />
         )}
       </AnimatePresence>
@@ -130,7 +145,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <motion.button
             whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={toggleMenu}
             className="lg:hidden p-2 text-white relative z-50"
             aria-label="Toggle menu"
           >
@@ -213,4 +228,8 @@ export default function Header() {
     </header>
     </>
   );
-}
+});
+
+Header.displayName = "Header";
+
+export default Header;

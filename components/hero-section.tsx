@@ -11,25 +11,21 @@ import { VideoPlayer } from "@/components/VideoPlayer";
 import { useVideoPlayer } from "@/hooks/use-video-player";
 
 // Memoized geometric shape to prevent unnecessary re-renders
-const GeometricShape = memo(({
-  className,
-  delay = 0,
-}: {
-  className: string;
-  delay?: number;
-}) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: [0.3, 0.6, 0.3] }}
-    transition={{
-      duration: 6,
-      delay,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    className={className}
-  />
-));
+const GeometricShape = memo(
+  ({ className, delay = 0 }: { className: string; delay?: number }) => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0.3, 0.6, 0.3] }}
+      transition={{
+        duration: 6,
+        delay,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className={className}
+    />
+  )
+);
 
 GeometricShape.displayName = "GeometricShape";
 
@@ -122,6 +118,7 @@ export function HeroSection() {
                     showControls={false}
                     muted={false}
                     loop={false}
+                    preload="none"
                     overlayContent={
                       <div className="relative w-full h-full flex flex-col items-center justify-center bg-black p-6 text-center group">
                         <p className="text-white/90 font-medium text-lg leading-relaxed max-w-[200px] mb-8">
@@ -254,6 +251,7 @@ export function HeroSection() {
                 muted={false}
                 loop={false}
                 autoplay={isModalOpen}
+                preload={isModalOpen ? "auto" : "none"}
               />
             </div>
           </DialogContent>
