@@ -140,12 +140,13 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
       >
         {/* Thumbnail image if provided - show when video is not playing */}
         {!isPlaying && thumbnail && (
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-10">
             <Image
               src={thumbnail}
               alt={title || "Video thumbnail"}
               fill
               className="object-cover"
+              priority={false}
             />
           </div>
         )}
@@ -153,15 +154,17 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
         <video
           ref={setRefs}
           src={src}
-          className={`w-full h-full object-cover ${className} ${!isPlaying && thumbnail ? 'opacity-0' : ''}`}
+          className={`w-full h-full object-cover ${className} ${
+            !isPlaying && thumbnail
+              ? "absolute inset-0 opacity-0 pointer-events-none -z-10"
+              : "relative z-0"
+          }`}
           playsInline
           muted={muted}
           // Only show native controls when video is playing (to avoid duplicate play buttons)
           controls={showControls && isPlaying}
           loop={loop}
-          preload={
-            preload !== undefined ? preload : autoplay ? "auto" : "none"
-          }
+          preload={preload !== undefined ? preload : autoplay ? "auto" : "none"}
           title={title}
           poster={thumbnail}
         />
@@ -172,8 +175,14 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className={`absolute inset-0 cursor-pointer group z-10 ${
-              thumbnail ? "bg-transparent" : darkOverlay ? "bg-black/60" : overlayContent ? "bg-transparent" : "bg-black/20"
+            className={`absolute inset-0 cursor-pointer group z-20 ${
+              thumbnail
+                ? "bg-transparent"
+                : darkOverlay
+                ? "bg-black/60"
+                : overlayContent
+                ? "bg-transparent"
+                : "bg-black/20"
             }`}
             onClick={(e) => {
               e.stopPropagation();
