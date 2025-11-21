@@ -118,7 +118,7 @@ const Header = memo(function Header() {
 
             {/* CTA Button */}
             <a
-              href="https://wa.me/5493415958964"
+              href="https://api.whatsapp.com/send?phone=5493415958964"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-[0_8px_24px_rgba(255,44,36,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 group relative overflow-hidden animate-slide-in-right-delayed"
@@ -159,7 +159,7 @@ const Header = memo(function Header() {
                         ))}
                       </div>
                       <a
-                        href="https://wa.me/5493415958964"
+                        href="https://api.whatsapp.com/send?phone=5493415958964"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2 px-4 py-3.5 md:py-4 mt-4 rounded-lg font-semibold text-base md:text-lg text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-lg transition-all duration-300"

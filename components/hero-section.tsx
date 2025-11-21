@@ -119,7 +119,7 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start animate-slide-in-up-delayed-3">
               {/* Primary Button */}
               <a
-                href="https://wa.me/5493415958964"
+                href="https://api.whatsapp.com/send?phone=5493415958964"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-lg font-bold text-white bg-gradient-to-r from-[#FF2C24] to-[#FFD74A] hover:shadow-[0_20px_50px_rgba(255,44,36,0.4)] active:scale-95 transition-all duration-300 group relative overflow-hidden flex items-center justify-center gap-2"
