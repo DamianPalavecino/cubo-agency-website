@@ -135,12 +135,12 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
 
     return (
       <div
-        className={`relative ${containerClassName} ${aspectRatio} overflow-hidden cursor-pointer`}
+        className={`relative ${containerClassName} ${aspectRatio} overflow-hidden cursor-pointer bg-black`}
         onClick={handleVideoClick}
       >
         {/* Thumbnail image if provided - show when video is not playing */}
         {!isPlaying && thumbnail && (
-          <div className="absolute inset-0 z-10">
+          <div className="absolute inset-0 z-10 bg-black">
             <Image
               src={thumbnail}
               alt={title || "Video thumbnail"}
@@ -164,50 +164,54 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
           // Only show native controls when video is playing (to avoid duplicate play buttons)
           controls={showControls && isPlaying}
           loop={loop}
-          preload={
-            preload !== undefined ? preload : autoplay ? "auto" : "metadata"
-          }
+          preload={preload !== undefined ? preload : autoplay ? "auto" : "none"}
           title={title}
           poster={thumbnail}
         />
 
         {/* Play button overlay - shows when video is not playing */}
         {!isPlaying && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`absolute inset-0 cursor-pointer group z-20 ${
-              thumbnail
-                ? "bg-transparent"
-                : darkOverlay
-                ? "bg-black/60"
-                : overlayContent
-                ? "bg-transparent"
-                : "bg-black/20"
-            }`}
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePlayClick();
-            }}
-          >
-            {overlayContent ? (
-              overlayContent
-            ) : (
-              <>
-                {/* Play button - centered */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    whileTap={{ scale: 0.95 }}
-                    style={{ transformOrigin: "center" }}
-                    className="video-control-button w-20 h-20 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white/50 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300 border-2 border-white/30"
-                  >
-                    <Play className="w-8 h-8 text-white ml-1" fill="white" />
-                  </motion.div>
-                </div>
-              </>
+          <>
+            {/* Dark overlay when darkOverlay is true */}
+            {darkOverlay && (
+              <div className="absolute inset-0 bg-black/40 z-[15] pointer-events-none" />
             )}
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`absolute inset-0 cursor-pointer group z-20 ${
+                thumbnail
+                  ? "bg-transparent"
+                  : darkOverlay
+                  ? "bg-black/40"
+                  : overlayContent
+                  ? "bg-black"
+                  : "bg-black/20"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePlayClick();
+              }}
+            >
+              {overlayContent ? (
+                overlayContent
+              ) : (
+                <>
+                  {/* Play button - centered */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div
+                      whileTap={{ scale: 0.95 }}
+                      style={{ transformOrigin: "center" }}
+                      className="video-control-button w-20 h-20 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:bg-white/50 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300 border-2 border-white/30"
+                    >
+                      <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                    </motion.div>
+                  </div>
+                </>
+              )}
+            </motion.div>
+          </>
         )}
       </div>
     );

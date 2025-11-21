@@ -51,6 +51,8 @@ const testimonialVideos = [
 const ThumbnailOverlay = memo(({ brandName }: { brandName: string }) => {
   return (
     <>
+      {/* Dark fade overlay */}
+      <div className="absolute inset-0 bg-black/30 z-10" />
       {/* Premium gradient overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/95 z-10" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
@@ -289,7 +291,6 @@ const MobileVideoCard = memo(
             ref={(el) => registerVideoRef(video.id, el)}
             src={video.videoUrl}
             title={video.title}
-            thumbnail={video.thumbnail}
             containerClassName="rounded-xl"
             showControls={false}
             muted={false}
