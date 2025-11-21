@@ -206,13 +206,14 @@ export function HeroSection() {
                       <VideoPlayer
                         src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                         title="Cubo Marketing Digital"
+                        thumbnail="/video-thumbnail.png"
                         containerClassName="rounded-[2.5rem]"
                         showControls={false}
                         muted={false}
                         loop={false}
                         preload="none"
                         overlayContent={
-                          <div className="relative w-full h-full flex flex-col items-center justify-center bg-black p-6 text-center group">
+                          <div className="relative w-full h-full flex flex-col items-center justify-center p-6 text-center group">
                             <p className="text-white/90 font-medium text-lg leading-relaxed max-w-[200px] mb-8">
                               Hace click para conocer más sobre nosotros
                             </p>
@@ -274,6 +275,7 @@ export function HeroSection() {
                 key={isModalOpen ? "modal-open" : "modal-closed"}
                 src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                 title="Cubo Marketing Digital"
+                thumbnail="/video-thumbnail.png"
                 showControls={false}
                 muted={false}
                 loop={false}

@@ -148,10 +148,22 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
           controls={showControls && isPlaying}
           loop={loop}
           preload={
-            preload !== undefined ? preload : autoplay ? "auto" : "metadata"
+            preload !== undefined ? preload : autoplay ? "auto" : "none"
           }
           title={title}
         />
+
+        {/* Thumbnail image if provided - show behind video when not playing */}
+        {!isPlaying && thumbnail && (
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={thumbnail}
+              alt={title || "Video thumbnail"}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
 
         {/* Play button overlay - shows when video is not playing */}
         {!isPlaying && (
@@ -160,7 +172,7 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className={`absolute inset-0 cursor-pointer group z-10 ${
-              darkOverlay ? "bg-black/60" : "bg-black/20"
+              thumbnail ? "bg-transparent" : darkOverlay ? "bg-black/60" : overlayContent ? "bg-transparent" : "bg-black/20"
             }`}
             onClick={(e) => {
               e.stopPropagation();
@@ -171,19 +183,6 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
               overlayContent
             ) : (
               <>
-                {/* Thumbnail image if provided */}
-                {thumbnail && (
-                  <div className="absolute inset-0">
-                    <Image
-                      src={thumbnail}
-                      alt={title || "Video thumbnail"}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                  </div>
-                )}
-
                 {/* Play button - centered */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div

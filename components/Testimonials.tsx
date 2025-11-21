@@ -20,6 +20,7 @@ const testimonialVideos = [
     title:
       "La satisfacción de ver al cliente feliz no tiene precio 🎉 muchas gracias por tus palabras Flo",
     brandName: "Kelis cosmetología",
+    thumbnail: "/thumbnail/testimonio-kelis_1763705694075_1.jpg",
   },
   {
     id: 2,
@@ -27,6 +28,7 @@ const testimonialVideos = [
     title:
       "Muchas gracias Fabricio de @altiv.sport por tu confianza, un placer trabajar con ustedes 👊",
     brandName: "@autoescuelalecole",
+    thumbnail: "/thumbnail/testimonio-lecole_1763705722312_1.jpg",
   },
   {
     id: 3,
@@ -34,12 +36,14 @@ const testimonialVideos = [
     title:
       "Muchas gracias Alejadro de @piscinas_alejandroo por la confianza de siempre 💙",
     brandName: "altiv",
+    thumbnail: "/thumbnail/testimonio-altiv_1763705736882_1.jpg",
   },
   {
     id: 4,
     videoUrl: `${R2_BASE_URL}/cliente-cubo4.mp4`,
     title: "lv_0_20251027120103",
     brandName: "piscinas alejandro",
+    thumbnail: "/thumbnail/testimonio-pileta_1763705745387_1.jpg",
   },
 ];
 
@@ -213,6 +217,7 @@ const TestimonialVideoCard = memo(
             ref={(el) => registerVideoRef(video.id, el)}
             src={video.videoUrl}
             title={video.title}
+            thumbnail={video.thumbnail}
             containerClassName="rounded-xl"
             showControls={false}
             muted={false}
@@ -220,7 +225,7 @@ const TestimonialVideoCard = memo(
             darkOverlay={true}
             overlayContent={<ThumbnailOverlay brandName={video.brandName} />}
             onPlay={onPlay}
-            preload="metadata"
+            preload="none"
           />
         ) : (
           <div className="aspect-[9/16] bg-black/50 rounded-xl flex items-center justify-center">
@@ -292,7 +297,7 @@ const MobileVideoCard = memo(
             onEnded={onEnded}
             overlayContent={<ThumbnailOverlay brandName={video.brandName} />}
             onPlay={onPlay}
-            preload="metadata"
+            preload="none"
           />
         ) : (
           <div className="aspect-[9/16] bg-black/50 rounded-xl flex items-center justify-center">
