@@ -80,7 +80,7 @@ export default function Services() {
   return (
     <section
       id="servicios"
-      className="relative pt-16 md:pt-16 pb-12 md:pb-20 px-2 sm:px-6 lg:px-8 bg-black overflow-hidden"
+      className="relative pt-8 md:pt-16 pb-12 md:pb-20 px-2 sm:px-6 lg:px-8 bg-black overflow-hidden"
     >
       {/* Premium geometric background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -186,13 +186,13 @@ const ServiceCard = memo(({ service }: { service: typeof services[0] }) => {
                   <ul className="space-y-4 mt-auto">
                     {service.highlights.map((highlight, i) => (
                       <li key={i} className="flex items-start gap-3 group/item">
-                        <div className="mt-1 p-0.5 rounded-full bg-white/5 group-hover/item:bg-white/10 transition-colors">
+                        <div className="p-0.5 rounded-full bg-white/5 group-hover/item:bg-white/10 transition-colors flex-shrink-0">
                           <Check
                             className="w-4 h-4"
                             style={{ color: service.iconColor }}
                           />
                         </div>
-                        <span className="text-gray-400 text-sm group-hover/item:text-gray-300 transition-colors">
+                        <span className="text-gray-400 text-sm group-hover/item:text-gray-300 transition-colors leading-relaxed">
                           {highlight}
                         </span>
                       </li>

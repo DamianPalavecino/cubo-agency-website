@@ -52,7 +52,7 @@ export function SocialMediaCarousel() {
   }, 0);
 
   return (
-    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-6 animate-slide-in-up">
+    <div className="relative w-full bg-black border-t border-white/10 overflow-hidden py-6 md:py-6 mt-1 mb-12 md:mt-0 md:mb-0 animate-slide-in-up">
       {/* Línea horizontal decorativa superior */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       {/* Línea horizontal decorativa inferior */}

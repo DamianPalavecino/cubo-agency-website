@@ -15,6 +15,10 @@ const Testimonials = dynamic(() => import("@/components/Testimonials"), {
   ssr: true,
 });
 
+const Clientes = dynamic(() => import("@/components/Clientes"), {
+  ssr: true,
+});
+
 export default function HomePage() {
   return (
     <div className="w-full">
@@ -22,6 +26,7 @@ export default function HomePage() {
       <SocialMediaCarousel />
       <Services />
       <Testimonials />
+      <Clientes />
     </div>
   );
 }
