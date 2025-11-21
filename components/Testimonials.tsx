@@ -225,6 +225,7 @@ const TestimonialVideoCard = memo(
             darkOverlay={true}
             overlayContent={<ThumbnailOverlay brandName={video.brandName} />}
             onPlay={onPlay}
+            preload="none"
           />
         ) : (
           <div className="aspect-[9/16] bg-black/50 rounded-xl flex items-center justify-center">
@@ -288,6 +289,7 @@ const MobileVideoCard = memo(
             ref={(el) => registerVideoRef(video.id, el)}
             src={video.videoUrl}
             title={video.title}
+            thumbnail={video.thumbnail}
             containerClassName="rounded-xl"
             showControls={false}
             muted={false}
@@ -296,6 +298,7 @@ const MobileVideoCard = memo(
             onEnded={onEnded}
             overlayContent={<ThumbnailOverlay brandName={video.brandName} />}
             onPlay={onPlay}
+            preload="none"
           />
         ) : (
           <div className="aspect-[9/16] bg-black/50 rounded-xl flex items-center justify-center">
