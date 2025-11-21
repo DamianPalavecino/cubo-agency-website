@@ -204,7 +204,7 @@ const TestimonialVideoCard = memo(
       <div
         ref={ref}
         className="relative bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl hover:border-cyan/60 transition-all duration-300 animate-slide-in-up"
-        style={{ animationDelay: `${index * 0.1}s` }}
+        style={{ animationDelay: `${index * 0.1}s`, isolation: "isolate" }}
       >
         {isInView ? (
           <VideoPlayer

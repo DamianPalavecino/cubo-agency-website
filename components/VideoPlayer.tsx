@@ -52,6 +52,7 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
     const pauseButtonTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const hasAutoplayedRef = useRef(false);
     const userPausedRef = useRef(false);
+    const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
     const { playVideo, pauseVideo } = useVideoPlayer();
 
     // Use callback ref for better synchronization
@@ -98,8 +99,12 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
         setIsPlaying(false);
         // Prevent autoplay from restarting when video pauses
         hasAutoplayedRef.current = true;
-        // Don't hide pause button here - let the timeout handle it
-        // This allows the pause button to show briefly even after pause
+        // Clear pause button immediately when video pauses to avoid weird transition
+        setShowPauseButton(false);
+        if (pauseButtonTimeoutRef.current) {
+          clearTimeout(pauseButtonTimeoutRef.current);
+          pauseButtonTimeoutRef.current = null;
+        }
         onPause?.();
       };
 
@@ -131,6 +136,12 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
       
       // Mark that user manually paused
       userPausedRef.current = true;
+      // Clear pause button immediately
+      setShowPauseButton(false);
+      if (pauseButtonTimeoutRef.current) {
+        clearTimeout(pauseButtonTimeoutRef.current);
+        pauseButtonTimeoutRef.current = null;
+      }
       // Force pause
       video.pause();
       setIsPlaying(false);
@@ -138,10 +149,39 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
       hasAutoplayedRef.current = true;
     };
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+      const touch = e.touches[0];
+      if (touch) {
+        touchStartRef.current = {
+          x: touch.clientX,
+          y: touch.clientY,
+          time: Date.now(),
+        };
+      }
+    };
+
     const handleVideoClick = (e: React.MouseEvent | React.TouchEvent) => {
       // Don't toggle if clicking on the button itself
       if ((e.target as HTMLElement).closest(".video-control-button")) {
         return;
+      }
+
+      // For touch events, check if it was a scroll vs a tap
+      if (e.type === "touchend" && touchStartRef.current) {
+        const touch = (e as React.TouchEvent).changedTouches[0];
+        if (touch && touchStartRef.current) {
+          const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
+          const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+          const deltaTime = Date.now() - touchStartRef.current.time;
+          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+          // If moved more than 10px or took longer than 300ms, it's likely a scroll, not a tap
+          if (distance > 10 || deltaTime > 300) {
+            touchStartRef.current = null;
+            return; // Don't trigger play/pause for scroll gestures
+          }
+        }
+        touchStartRef.current = null;
       }
 
       // Stop propagation to prevent double handling
@@ -154,18 +194,9 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
       const videoIsPlaying = !video.paused && !video.ended;
 
       if (videoIsPlaying) {
-        // Show pause button immediately when clicking on playing video
-        setShowPauseButton(true);
-        // Clear any existing timeout
-        if (pauseButtonTimeoutRef.current) {
-          clearTimeout(pauseButtonTimeoutRef.current);
-        }
         // Pause the video - use the handler to ensure consistency
+        // The pause handler will clear the pause button, so we don't show it here
         handlePauseClick();
-        // Hide pause button after 1.5 seconds (gives visual feedback)
-        pauseButtonTimeoutRef.current = setTimeout(() => {
-          setShowPauseButton(false);
-        }, 1500);
       } else {
         // Hide pause button overlay when playing
         setShowPauseButton(false);
@@ -188,12 +219,14 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
     return (
       <div
         className={`relative ${containerClassName} ${aspectRatio} overflow-hidden cursor-pointer bg-black`}
+        style={{ isolation: "isolate", contain: "layout style paint" }}
         onClick={handleVideoClick}
+        onTouchStart={handleTouchStart}
         onTouchEnd={handleVideoClick}
       >
         {/* Thumbnail image if provided - show when video is not playing */}
         {!isPlaying && thumbnail && (
-          <div className="absolute inset-0 z-10 bg-black">
+          <div className="absolute inset-0 z-10 bg-black overflow-hidden" style={{ borderRadius: "inherit" }}>
             <Image
               src={thumbnail}
               alt={title || "Video thumbnail"}
@@ -207,11 +240,21 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
         <video
           ref={setRefs}
           src={src}
-          className={`w-full h-full object-cover ${className} ${
+          className={`object-cover ${className} ${
             !isPlaying && thumbnail
               ? "absolute inset-0 opacity-0 pointer-events-none -z-10"
-              : "relative z-0"
+              : "absolute inset-0 z-0"
           }`}
+          style={{ 
+            display: "block", 
+            margin: 0, 
+            padding: 0, 
+            verticalAlign: "top",
+            borderRadius: "inherit",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+          }}
           playsInline
           muted={muted}
           // Only show native controls when video is playing (to avoid duplicate play buttons)
@@ -224,6 +267,7 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
             e.stopPropagation();
             handleVideoClick(e);
           }}
+          onTouchStart={handleTouchStart}
           onTouchEnd={(e) => {
             e.stopPropagation();
             handleVideoClick(e);
