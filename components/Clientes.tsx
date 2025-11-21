@@ -139,18 +139,18 @@ const ClientLogoCard = memo(
     return (
       <ScrollReveal direction="scale" delay={index * 0.05} duration={0.5}>
         <div className="group relative flex items-center justify-center p-4">
-        {/* Logo */}
-        <Image
-          src={client.logo}
-          alt={client.alt}
-          width={300}
-          height={120}
-          className={`object-contain w-auto opacity-50 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-110 ${
-            client.orientation === "horizontal"
-              ? "max-h-24 md:max-h-32 max-w-full"
-              : "max-w-24 md:max-w-32 max-h-full"
-          }`}
-        />
+          {/* Logo */}
+          <Image
+            src={client.logo}
+            alt={client.alt}
+            width={300}
+            height={120}
+            className={`object-contain w-auto opacity-50 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-110 ${
+              client.orientation === "horizontal"
+                ? "max-h-24 md:max-h-32 max-w-full"
+                : "max-w-24 md:max-w-32 max-h-full"
+            }`}
+          />
         </div>
       </ScrollReveal>
     );
@@ -179,12 +179,13 @@ export default function Clientes() {
               Marcas que confiaron en nosotros
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Negocios que han crecido en redes sociales con nuestras estrategias
+              Negocios que han crecido en redes sociales con nuestras
+              estrategias
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-x-6 md:gap-y-3">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-x-6 md:gap-y-3">
           {clients.map((client, index) => (
             <ClientLogoCard key={client.id} client={client} index={index} />
           ))}
