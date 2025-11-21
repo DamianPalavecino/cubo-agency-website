@@ -252,7 +252,6 @@ export function HeroSection() {
             </VisuallyHidden>
             <div className="relative w-full aspect-[9/16] bg-black">
               <VideoPlayer
-                key={isModalOpen ? "modal-open" : "modal-closed"}
                 src="https://pub-896a92390fc4493cac65a1af57b4a664.r2.dev/presentacion.mp4"
                 title="Cubo Marketing Digital"
                 showControls={false}
